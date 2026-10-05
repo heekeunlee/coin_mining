@@ -142,6 +142,7 @@
   }
   .pill.good{background:var(--good-soft);color:var(--good);}
   .pill.warn{background:var(--warning-soft);color:var(--warning);}
+  .pill.crit{background:var(--critical-soft);color:var(--critical);}
   .table-foot-note{margin-top:14px;font-size:12px;color:var(--ink-faint);line-height:1.6;}
 
   /* ---------- Mining plan ---------- */
@@ -199,6 +200,19 @@
   }
   .ban-banner b{color:var(--critical);}
 
+  /* ---------- Security checklist ---------- */
+  .check-list{display:flex;flex-direction:column;gap:10px;}
+  .check-item{display:flex;gap:14px;align-items:flex-start;background:var(--surface);border:1px solid var(--border);border-left:4px solid var(--border-strong);border-radius:8px;padding:14px 16px;box-shadow:var(--shadow);}
+  .check-item.critical{border-left-color:var(--critical);}
+  .check-item.warning{border-left-color:var(--warning);}
+  .check-item.info{border-left-color:var(--good);}
+  .check-tag{flex:none;font-family:'IBM Plex Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.03em;padding:4px 9px;border-radius:5px;white-space:nowrap;margin-top:1px;}
+  .check-item.critical .check-tag{background:var(--critical-soft);color:var(--critical);}
+  .check-item.warning .check-tag{background:var(--warning-soft);color:var(--warning);}
+  .check-item.info .check-tag{background:var(--good-soft);color:var(--good);}
+  .check-title{font-weight:600;font-size:13.5px;margin-bottom:3px;}
+  .check-desc{font-size:12.5px;color:var(--ink-muted);line-height:1.6;}
+
   /* ---------- Footer ---------- */
   footer{border-top:1px solid var(--border-strong);padding-top:20px;margin-top:8px;}
   footer .disclaimer{font-size:12px;color:var(--ink-faint);line-height:1.7;max-width:760px;}
@@ -249,9 +263,9 @@
         <div class="delta flat">RandomX · 전체 네트워크</div>
       </div>
       <div class="stat-tile">
-        <div class="label">예상 일일 순수익 (내 Mac mini M4)</div>
-        <div class="value tnum" style="color:var(--good)">+₩82</div>
-        <div class="delta flat">4,000 H/s · 풀 수수료·전기세 반영</div>
+        <div class="label">예상 일일 순수익 (내 Mac mini M4, 실측)</div>
+        <div class="value tnum" style="color:var(--good)">+₩63</div>
+        <div class="delta flat">4,148 H/s 실측 · 전기요금 2단계(244원/kWh) 가정</div>
       </div>
     </div>
   </section>
@@ -357,35 +371,38 @@
 
     <section class="card" style="margin-bottom:0;">
       <h3>기기별 24시간 채굴 수익성</h3>
-      <div class="card-sub">블록 보상 0.6 XMR / 2분 · 네트워크 6.3 GH/s 기준</div>
+      <div class="card-sub">블록 보상 0.6 XMR / 2분 · 네트워크 6.3 GH/s · 전기요금 2단계(244원/kWh) 기준</div>
 
       <table>
         <thead>
-          <tr><th>기기</th><th class="num">해시레이트</th><th class="num">일 순수익</th><th>판정</th></tr>
+          <tr><th>기기</th><th class="num">해시레이트</th><th class="num">일 순수익</th><th class="num">출금 도달</th><th>판정</th></tr>
         </thead>
         <tbody>
           <tr>
             <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>Mac mini M2</td>
-            <td class="num tnum">2,500 H/s</td>
-            <td class="num tnum">+₩6</td>
-            <td><span class="pill warn">손익 ±0</span></td>
+            <td class="num tnum">2,500 H/s<br><span style="font-size:9.5px;color:var(--ink-faint);font-family:'IBM Plex Sans KR',sans-serif;">추정</span></td>
+            <td class="num tnum">-₩20</td>
+            <td class="num tnum">약 18일</td>
+            <td><span class="pill crit">적자</span></td>
           </tr>
           <tr style="background:var(--accent-soft)">
             <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>Mac mini M4 <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">내 기기 · Mac16,10</span></td>
-            <td class="num tnum">4,000 H/s</td>
-            <td class="num tnum">+₩82</td>
+            <td class="num tnum">4,148 H/s<br><span style="font-size:9.5px;color:var(--accent-ink);font-family:'IBM Plex Sans KR',sans-serif;">실측 2026-10-05</span></td>
+            <td class="num tnum">+₩63</td>
+            <td class="num tnum">약 11일</td>
             <td><span class="pill warn">미미한 흑자</span></td>
           </tr>
           <tr>
             <td class="device"><span class="swatch" style="background:var(--cat-3)"></span>Mac mini M4 Max</td>
-            <td class="num tnum">7,000 H/s</td>
-            <td class="num tnum">+₩233</td>
-            <td><span class="pill good">소액 흑자</span></td>
+            <td class="num tnum">7,000 H/s<br><span style="font-size:9.5px;color:var(--ink-faint);font-family:'IBM Plex Sans KR',sans-serif;">추정</span></td>
+            <td class="num tnum">+₩207</td>
+            <td class="num tnum">약 6일</td>
+            <td><span class="pill good">흑자</span></td>
           </tr>
         </tbody>
       </table>
       <div class="table-foot-note">
-        전기요금 25W·0.6kWh/일·200원/kWh 가정, 풀 수수료 1% 반영한 추정치입니다. 실제 수치는 전기요금 구간, 채굴 풀, 시세에 따라 크게 달라집니다. 풀의 최소 출금 기준은 통상 0.01~0.1 XMR인데, 이 속도로는 M2가 기준치 도달까지 최대 1.6년, 내 기기(M4)는 약 5~53주(1개월~1년), M4 Max는 최소 3주가 걸립니다.
+        <b>내 기기 해시레이트는 실제 측정값입니다</b> — 2026-10-05, <code style="font-family:'IBM Plex Mono',monospace">xmrig --bench=1M</code> 로컬 벤치마크(풀 연결 없음), 10코어 전부 사용, Huge Pages 미지원(macOS 특성) 상태에서 4,148 H/s. 최소 출금 기준은 SupportXMR 풀의 0.003 XMR로 계산했습니다(선택한 풀에 따라 달라질 수 있음). 전기요금은 가정용 2단계(201~400kWh, 214.6원/kWh+부가세10%+전력산업기반기금3.7%≈244원/kWh)로 계산했으며, <b>구간별로 순수익이 크게 달라집니다</b> — 내 기기(M4) 기준 1단계(약 136원/kWh): <b style="color:var(--good)">+128원</b> · 2단계(244원): <b style="color:var(--warning)">+63원</b> · 3단계(400kWh 초과, 약 349원/kWh): <b style="color:var(--critical)">-0원(손익 거의 0)</b>. M2·M4 Max 해시레이트는 xmrig.com 공개 벤치마크 기반 추정치입니다.
       </div>
     </section>
 
@@ -394,9 +411,9 @@
   <!-- ===== LONG-TERM SIMULATION ===== -->
   <section class="card">
     <h3>장기 보유 시뮬레이션 · 누적 채굴 자산의 평가금액</h3>
-    <div class="card-sub">내 Mac mini(M4, 4,000 H/s)로 매일 채굴, 코인을 전혀 매도하지 않고 보유 — 월간 가격 성장률 시나리오별 24개월 후 평가금액. <b style="color:var(--accent-ink)">월 +3%</b> 선은 2024-01~2026-10 실제 월평균 상승률(약 3.6%)에 가장 근접해 가장 현실적인 기준선으로 강조했습니다.</div>
+    <div class="card-sub">내 Mac mini(M4, 실측 4,148 H/s)로 매일 채굴, 코인을 전혀 매도하지 않고 보유 — 월간 가격 성장률 시나리오별 24개월 후 평가금액. 가격이 오르면 채굴 경쟁도 함께 늘어난다는 가정으로 <b>네트워크 해시레이트도 동일한 비율로 같이 성장</b>시켜 채굴 몫 감소를 반영했습니다. <b style="color:var(--accent-ink)">월 +3%</b> 선은 2024-01~2026-10 실제 월평균 상승률(약 3.6%)에 가장 근접해 현실적 기준선으로 강조했습니다.</div>
 
-    <svg class="chart-svg" viewBox="0 0 700 280" role="img" aria-label="월 성장률 1%에서 15%까지 6개 시나리오의 24개월 후 평가금액. 가장 현실적인 월 3% 선은 24개월 후 약 29만6천원. 월 10%, 15% 선은 비현실적으로 커져 차트 상단을 벗어남">
+    <svg class="chart-svg" viewBox="0 0 700 280" role="img" aria-label="월 성장률 -2%에서 +7%까지 6개 시나리오의 24개월 후 평가금액. 가장 현실적인 월 3% 선은 24개월 후 약 22만원">
       <g stroke="#D9DFD8" stroke-width="1">
         <line x1="56" y1="238" x2="616" y2="238"/>
         <line x1="56" y1="186" x2="616" y2="186"/>
@@ -406,10 +423,10 @@
       </g>
       <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A928C">
         <text x="50" y="242" text-anchor="end">₩0</text>
-        <text x="50" y="190" text-anchor="end">20만</text>
-        <text x="50" y="138" text-anchor="end">40만</text>
-        <text x="50" y="86"  text-anchor="end">60만</text>
-        <text x="50" y="34"  text-anchor="end">80만↑</text>
+        <text x="50" y="190" text-anchor="end">10만</text>
+        <text x="50" y="138" text-anchor="end">20만</text>
+        <text x="50" y="86"  text-anchor="end">30만</text>
+        <text x="50" y="34"  text-anchor="end">40만</text>
       </g>
       <!-- x ticks: quarterly to 12mo, then yearly -->
       <g stroke="#C2CAC0" stroke-width="1">
@@ -435,55 +452,52 @@
 
       <!-- de-emphasized scenarios -->
       <g fill="none" stroke="var(--muted-line)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="56.0,238.0 79.3,236.4 102.7,234.8 126.0,233.1 149.3,231.4 172.7,229.7 196.0,228.0 219.3,226.2 242.7,224.4 266.0,222.5 289.3,220.6 312.7,218.7 336.0,216.7 359.3,214.7 382.7,212.6 406.0,210.6 429.3,208.4 452.7,206.3 476.0,204.1 499.3,201.8 522.7,199.6 546.0,197.2 569.3,194.9 592.7,192.4 616.0,190.0"><title>월 +1% 성장(보수적) · 24개월 후 ₩184,655</title></polyline>
-        <polyline points="56.0,238.0 79.3,236.3 102.7,234.5 126.0,232.5 149.3,230.3 172.7,227.9 196.0,225.3 219.3,222.5 242.7,219.4 266.0,216.0 289.3,212.3 312.7,208.4 336.0,204.0 359.3,199.4 382.7,194.3 406.0,188.9 429.3,183.0 452.7,176.6 476.0,169.8 499.3,162.4 522.7,154.4 546.0,145.8 569.3,136.6 592.7,126.7 616.0,116.1"><title>월 +5% 성장(낙관) · 24개월 후 ₩469,021</title></polyline>
-        <polyline points="56.0,238.0 79.3,236.3 102.7,234.4 126.0,232.2 149.3,229.7 172.7,227.0 196.0,223.8 219.3,220.3 242.7,216.3 266.0,211.9 289.3,207.0 312.7,201.5 336.0,195.4 359.3,188.6 382.7,181.1 406.0,172.8 429.3,163.6 452.7,153.4 476.0,142.2 499.3,129.7 522.7,116.1 546.0,101.0 569.3,84.4 592.7,66.2 616.0,46.2"><title>월 +7% 성장(급등기 수준) · 24개월 후 ₩737,665</title></polyline>
-        <polyline points="56.0,238.0 79.3,236.3 102.7,234.2 126.0,231.7 149.3,228.8 172.7,225.3 196.0,221.3 219.3,216.5 242.7,211.0 266.0,204.6 289.3,197.1 312.7,188.6 336.0,178.7 359.3,167.3 382.7,154.2 406.0,139.3 429.3,122.2 452.7,102.6 476.0,80.3 499.3,54.9 522.7,30.0 546.0,30.0 569.3,30.0 592.7,30.0 616.0,30.0" stroke-dasharray="1 3"><title>월 +10% 성장(비현실) · 24개월 후 ₩1,432,429 · 20개월경 차트 상단 초과</title></polyline>
-        <polyline points="56.0,238.0 79.3,236.2 102.7,233.8 126.0,230.8 149.3,227.0 172.7,222.2 196.0,216.1 219.3,208.7 242.7,199.4 266.0,188.1 289.3,174.3 312.7,157.4 336.0,136.8 359.3,112.0 382.7,81.9 406.0,45.7 429.3,30.0 452.7,30.0 476.0,30.0 499.3,30.0 522.7,30.0 546.0,30.0 569.3,30.0 592.7,30.0 616.0,30.0" stroke-dasharray="1 3"><title>월 +15% 성장(비현실) · 24개월 후 ₩4,162,908 · 16개월경 차트 상단 초과</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.8 102.7,231.6 126.0,228.5 149.3,225.4 172.7,222.5 196.0,219.5 219.3,216.7 242.7,213.9 266.0,211.1 289.3,208.4 312.7,205.8 336.0,203.2 359.3,200.6 382.7,198.2 406.0,195.7 429.3,193.3 452.7,191.0 476.0,188.7 499.3,186.4 522.7,184.2 546.0,182.1 569.3,180.0 592.7,177.9 616.0,175.9"><title>월 -2% 성장(하락 지속) · 24개월 후 ₩119,503</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.7 102.7,231.5 126.0,228.2 149.3,224.9 172.7,221.7 196.0,218.4 219.3,215.1 242.7,211.9 266.0,208.6 289.3,205.3 312.7,202.1 336.0,198.8 359.3,195.5 382.7,192.3 406.0,189.0 429.3,185.7 452.7,182.5 476.0,179.2 499.3,175.9 522.7,172.6 546.0,169.4 569.3,166.1 592.7,162.8 616.0,159.6"><title>월 0% 성장(가격 정체) · 24개월 후 ₩150,809</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.7 102.7,231.4 126.0,228.0 149.3,224.7 172.7,221.2 196.0,217.8 219.3,214.3 242.7,210.8 266.0,207.2 289.3,203.6 312.7,200.0 336.0,196.4 359.3,192.7 382.7,188.9 406.0,185.1 429.3,181.3 452.7,177.5 476.0,173.6 499.3,169.7 522.7,165.7 546.0,161.7 569.3,157.6 592.7,153.6 616.0,149.4"><title>월 +1% 성장(보수적) · 24개월 후 ₩170,339</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.7 102.7,231.1 126.0,227.4 149.3,223.6 172.7,219.5 196.0,215.2 219.3,210.7 242.7,206.0 266.0,201.1 289.3,195.9 312.7,190.4 336.0,184.7 359.3,178.7 382.7,172.4 406.0,165.8 429.3,158.8 452.7,151.5 476.0,143.8 499.3,135.7 522.7,127.3 546.0,118.4 569.3,109.1 592.7,99.3 616.0,89.0"><title>월 +5% 성장(낙관) · 24개월 후 ₩286,543</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.6 102.7,231.0 126.0,227.1 149.3,223.0 172.7,218.6 196.0,213.8 219.3,208.7 242.7,203.3 266.0,197.5 289.3,191.3 312.7,184.7 336.0,177.5 359.3,169.9 382.7,161.8 406.0,153.1 429.3,143.7 452.7,133.8 476.0,123.1 499.3,111.7 522.7,99.4 546.0,86.4 569.3,72.4 592.7,57.4 616.0,41.4"><title>월 +7% 성장(2025년 급등기 수준) · 24개월 후 ₩378,144</title></polyline>
       </g>
 
       <!-- highlighted realistic scenario: +3%/월 -->
       <g fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="56.0,238.0 79.3,236.4 102.7,234.7 126.0,232.8 149.3,230.9 172.7,228.9 196.0,226.7 219.3,224.4 242.7,222.0 266.0,219.5 289.3,216.8 312.7,214.0 336.0,211.0 359.3,207.9 382.7,204.6 406.0,201.2 429.3,197.5 452.7,193.7 476.0,189.7 499.3,185.5 522.7,181.1 546.0,176.5 569.3,171.6 592.7,166.5 616.0,161.1"><title>월 +3% 성장 · 현실적 기준선 · 24개월 후 ₩295,626</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.7 102.7,231.3 126.0,227.8 149.3,224.1 172.7,220.4 196.0,216.5 219.3,212.6 242.7,208.5 266.0,204.3 289.3,200.0 312.7,195.5 336.0,190.9 359.3,186.2 382.7,181.3 406.0,176.3 429.3,171.2 452.7,165.8 476.0,160.4 499.3,154.7 522.7,148.9 546.0,142.9 569.3,136.7 592.7,130.4 616.0,123.8"><title>월 +3% 성장 · 현실적 기준선(네트워크 해시레이트도 함께 성장 반영) · 24개월 후 ₩219,547</title></polyline>
       </g>
-      <circle cx="616.0" cy="161.1" r="5.5" fill="var(--accent)" stroke="#171A18" stroke-width="1.4"/>
-      <circle cx="336.0" cy="211.0" r="4" fill="var(--accent)" stroke="#171A18" stroke-width="1.2"/>
-
-      <!-- off-chart arrows for 10%/15% -->
-      <g stroke="#8A928C" stroke-width="1.4" fill="none">
-        <path d="M 522.7 30 l -4 7 M 522.7 30 l 4 7" stroke-linecap="round"/>
-        <path d="M 429.3 30 l -4 7 M 429.3 30 l 4 7" stroke-linecap="round"/>
-      </g>
+      <circle cx="616.0" cy="123.8" r="5.5" fill="var(--accent)" stroke="#171A18" stroke-width="1.4"/>
+      <circle cx="336.0" cy="190.9" r="4" fill="var(--accent)" stroke="#171A18" stroke-width="1.2"/>
 
       <g font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700">
-        <text x="624" y="161.1" fill="var(--accent-ink)">₩29.6만</text>
-        <text x="624" y="190.0" fill="var(--ink-faint)" font-weight="500" font-size="9.5">₩18.5만</text>
-        <text x="624" y="116.1" fill="var(--ink-faint)" font-weight="500" font-size="9.5">₩46.9만</text>
-        <text x="624" y="46.2"  fill="var(--ink-faint)" font-weight="500" font-size="9.5">₩73.8만</text>
-        <text x="429.3" y="24" text-anchor="middle" fill="var(--ink-faint)" font-size="9">↑비현실 구간</text>
+        <text x="624" y="123.8" fill="var(--accent-ink)">₩22.0만</text>
+      </g>
+      <g font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="500" fill="var(--ink-faint)">
+        <text x="624" y="41.4">₩37.8만</text>
+        <text x="624" y="89.0">₩28.7만</text>
+        <text x="624" y="149.4">₩17.0만</text>
+        <text x="624" y="163.5">₩15.1만</text>
+        <text x="624" y="178.0">₩12.0만</text>
       </g>
     </svg>
 
     <div class="sim-legend">
+      <span class="leg-item"><span class="leg-sw"></span>월 -2%</span>
+      <span class="leg-item"><span class="leg-sw"></span>월 0%</span>
       <span class="leg-item"><span class="leg-sw"></span>월 +1%</span>
       <span class="leg-item highlight"><span class="leg-sw"></span>월 +3% — 현실적 기준선</span>
       <span class="leg-item"><span class="leg-sw"></span>월 +5%</span>
       <span class="leg-item"><span class="leg-sw"></span>월 +7%</span>
-      <span class="leg-item"><span class="leg-sw"></span>월 +10% (비현실)</span>
-      <span class="leg-item"><span class="leg-sw"></span>월 +15% (비현실)</span>
     </div>
 
     <div class="sim-end-row">
-      <div class="sim-end-tile"><div class="sim-rate">월 +1%</div><div class="sim-val tnum">₩184,655</div></div>
-      <div class="sim-end-tile highlight"><div class="sim-rate">월 +3%</div><div class="sim-val tnum">₩295,626</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +5%</div><div class="sim-val tnum">₩469,021</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +7%</div><div class="sim-val tnum">₩737,665</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +10%</div><div class="sim-val tnum">₩1,432,429</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +15%</div><div class="sim-val tnum">₩4,162,908</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 -2%</div><div class="sim-val tnum">₩119,503</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 0%</div><div class="sim-val tnum">₩150,809</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +1%</div><div class="sim-val tnum">₩170,339</div></div>
+      <div class="sim-end-tile highlight"><div class="sim-rate">월 +3%</div><div class="sim-val tnum">₩219,547</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +5%</div><div class="sim-val tnum">₩286,543</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +7%</div><div class="sim-val tnum">₩378,144</div></div>
     </div>
 
     <div class="table-foot-note">
-      가정: 일일 채굴량 0.0002715 XMR(M4, 풀 수수료 1% 반영, 난이도·네트워크 해시레이트는 현재 수준 6.3 GH/s로 고정) × 매월 복리 성장률 × 24개월. 코인은 매도하지 않고 전액 보유, 평가금액은 매월 말 시세로 마크투마켓한 값입니다. <b>월 +3%는 2024년 1월~2026년 10월 실제 월평균 상승률(약 3.6%/월, 연 환산 약 43%)에 가장 근접해 현실적 기준선으로 선택했습니다.</b> 월 +10%·+15%는 2개월 치 급등이 24개월간 지속된다는 가정이라 비현실적이며 차트 상단을 벗어나 점선으로만 표시했습니다(정확한 수치는 위 24개월 후 평가금액 표 참고). 투자 조언이 아닙니다.
+      가정: 실측 4,148 H/s(M4) 기준 일일 채굴량, 풀 수수료 1% 반영 × 24개월. <b>이전 버전과 달리 네트워크 해시레이트도 가격과 같은 비율로 매달 커진다고 가정</b>해 내 몫이 서서히 줄어드는 효과를 반영했습니다(가격이 오르면 채굴 경쟁자가 늘어나는 실제 동학에 더 가깝습니다) — 그 결과 월 +3% 시나리오의 24개월 후 평가금액은 ₩295,626(고정 해시레이트 가정)에서 <b>₩219,547</b>로 낮아졌습니다. 코인은 매도하지 않고 전액 보유, 평가금액은 매월 말 시세로 마크투마켓한 값입니다. <b>월 +3%는 2024년 1월~2026년 10월 실제 월평균 상승률(약 3.6%/월)에 가장 근접해 현실적 기준선으로 선택</b>했고, 균형을 위해 하락(−2%)·정체(0%) 시나리오도 함께 표시했습니다. 투자 조언이 아닙니다.
     </div>
   </section>
 
@@ -607,11 +621,60 @@
       <span>⚠</span>
       <span><b>국내 직거래 불가</b> — FIU 가이드라인상 업비트·빗썸 등 국내 원화거래소는 모네로를 익명성 강화 코인으로 분류해 상장하지 않습니다. 반드시 해외 경유 후 국내 거래소로 들어와야 합니다.</span>
     </div>
+    <div class="ban-banner" style="margin-top:10px;">
+      <span>⚠</span>
+      <span><b>트래블룰 소명 대비</b> — 특금법상 국내 거래소는 프라이버시 코인에서 유입된 자금의 입금을 거절하거나 출처 소명을 요구할 수 있습니다. 풀 지급 내역 캡처, 수신 지갑 주소, 채굴 날짜를 처음부터 기록해두면 "직접 채굴분"이라는 소명 자료가 됩니다.</span>
+    </div>
+  </section>
+
+  <!-- ===== SECURITY & LEGAL CHECKLIST ===== -->
+  <section>
+    <div class="section-head">
+      <h2>보안·법적 체크리스트</h2>
+      <span class="section-note">채굴 시작 전 확인</span>
+    </div>
+    <div class="check-list">
+      <div class="check-item critical">
+        <span class="check-tag">위험</span>
+        <div class="check-body">
+          <div class="check-title">지갑 시드 25단어는 어디에도 입력·표시하지 않기</div>
+          <div class="check-desc">화면 캡처, 채팅, AI 등 디지털 매체에는 절대 남기지 말고 종이에만 적어 안전한 곳에 보관하세요.</div>
+        </div>
+      </div>
+      <div class="check-item warning">
+        <span class="check-tag">주의</span>
+        <div class="check-body">
+          <div class="check-title">설치 파일 무결성 확인</div>
+          <div class="check-desc">XMRig는 공식 GitHub 릴리스의 해시값과 대조하고 설치하세요. (이 대시보드의 실측치는 Homebrew 패키지로 측정했으며, 정식 채굴 설치 시에는 공식 릴리스 검증을 권장합니다.)</div>
+        </div>
+      </div>
+      <div class="check-item warning">
+        <span class="check-tag">주의</span>
+        <div class="check-body">
+          <div class="check-title">트래블룰 대비 기록 보관</div>
+          <div class="check-desc">풀 지급 내역, 수신 지갑 주소, 채굴 날짜를 처음부터 기록해두세요. 국내 거래소가 입금 출처를 소명하라고 요구할 때 "직접 채굴분"이라는 근거가 됩니다.</div>
+        </div>
+      </div>
+      <div class="check-item warning">
+        <span class="check-tag">주의</span>
+        <div class="check-body">
+          <div class="check-title">2027년 가상자산 소득세 대비</div>
+          <div class="check-desc">2027-01-01부터 가상자산 소득에 연 250만원 공제 후 22%(지방소득세 포함) 분리과세가 시행됩니다. 채굴 수량·날짜·당시 시세를 기록해두세요. 시행 전 보유분은 취득가액을 "취득 당시가" 또는 "2026년 말 시가" 중 높은 금액으로 인정하는 특례가 있어, 채굴분처럼 취득가가 거의 0원인 코인은 이 특례가 유리하게 작용할 수 있습니다.</div>
+        </div>
+      </div>
+      <div class="check-item info">
+        <span class="check-tag">참고</span>
+        <div class="check-body">
+          <div class="check-title">이 저장소는 공개 상태이며 실명이 노출되어 있습니다</div>
+          <div class="check-desc">지갑 주소나 채굴 풀 대시보드 링크는 절대 커밋하지 마세요. 현재는 게시되어 있지 않으며, 이 상태를 계속 유지해야 합니다.</div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <footer>
     <div class="disclaimer">
-      본 대시보드는 2026년 10월 5일 기준 공개 자료를 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
+      본 대시보드는 2026년 10월 5일 기준 공개 자료와 내 Mac mini(M4)에서 직접 측정한 로컬 벤치마크를 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금·채굴 풀 조건은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
     </div>
     <div class="sources">
       SOURCES —
@@ -623,7 +686,10 @@
       <a href="https://xmrig.com/benchmark/5nGrko" target="_blank" rel="noopener">XMRig 벤치마크</a> ·
       <a href="https://docs.getmonero.org/technical-specs/" target="_blank" rel="noopener">Monero 기술 명세</a> ·
       <a href="https://www.exchangerates.org.uk/crypto-currencies/monero-to-us-dollar-history-xmr-usd-2024" target="_blank" rel="noopener">2024년 월별 시세</a> ·
-      <a href="https://coinmarketcap.com/currencies/monero/historical-data/" target="_blank" rel="noopener">CoinMarketCap 히스토리</a>
+      <a href="https://coinmarketcap.com/currencies/monero/historical-data/" target="_blank" rel="noopener">CoinMarketCap 히스토리</a> ·
+      <a href="https://supportxmr.com/" target="_blank" rel="noopener">SupportXMR 풀</a> ·
+      <a href="https://namu.wiki/w/%EC%A0%84%EA%B8%B0%EC%9A%94%EA%B8%88" target="_blank" rel="noopener">2026년 전기요금 누진제</a> ·
+      <a href="https://domolaw.co.kr/legal-guide/da1b8c7c-2164-46d0-985e-242b36d855fa" target="_blank" rel="noopener">2027년 가상자산 과세</a>
     </div>
   </footer>
 
