@@ -161,6 +161,7 @@
     border:1px solid var(--border);justify-self:end;
   }
   .status-chip.next{background:var(--accent-soft);color:var(--accent-ink);border-color:#F0C19C;}
+  .status-chip.done{background:var(--good-soft);color:var(--good);border-color:#B9E0CC;}
 
   /* ---------- Outlook pro/con ---------- */
   .outlook-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
@@ -239,7 +240,7 @@
       <div class="sub">맥미니 CPU 채굴 타당성 분석과 시세 추적을 한 장에 정리한 개인용 대시보드.</div>
     </div>
     <div class="meta-chip-row">
-      <span class="chip accent">DATA AS OF 2026-10-05</span>
+      <span class="chip accent">DATA AS OF 2026-10-06</span>
       <span class="chip">취미 · 비영리 목적</span>
     </div>
   </header>
@@ -263,9 +264,9 @@
         <div class="delta flat">RandomX · 전체 네트워크</div>
       </div>
       <div class="stat-tile">
-        <div class="label">예상 일일 순수익 (내 Mac mini M4, 실측)</div>
-        <div class="value tnum" style="color:var(--good)">+₩63</div>
-        <div class="delta flat">4,148 H/s 실측 · 전기요금 2단계(244원/kWh) 가정</div>
+        <div class="label">일일 총수익 (현재 운영 중 · 2스레드 80%)</div>
+        <div class="value tnum" style="color:var(--accent-ink)">~₩55</div>
+        <div class="delta flat">1,075 H/s 실측(실제 풀 연결) · 전기비 제외 · 0.6% 풀수수료 반영</div>
       </div>
     </div>
   </section>
@@ -370,39 +371,46 @@
     </section>
 
     <section class="card" style="margin-bottom:0;">
-      <h3>기기별 24시간 채굴 수익성</h3>
-      <div class="card-sub">블록 보상 0.6 XMR / 2분 · 네트워크 6.3 GH/s · 전기요금 2단계(244원/kWh) 기준</div>
+      <h3>내 Mac mini M4 — 설정별 실측 수익성</h3>
+      <div class="card-sub">전부 SupportXMR 풀 실연결·nice 19 기준 실측값 (전기비 미반영, 총수익 기준)</div>
 
       <table>
         <thead>
-          <tr><th>기기</th><th class="num">해시레이트</th><th class="num">일 순수익</th><th class="num">출금 도달</th><th>판정</th></tr>
+          <tr><th>설정</th><th class="num">해시레이트</th><th class="num">일 총수익</th><th class="num">출금 도달*</th><th>상태</th></tr>
         </thead>
         <tbody>
           <tr>
-            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>Mac mini M2</td>
-            <td class="num tnum">2,500 H/s<br><span style="font-size:9.5px;color:var(--ink-faint);font-family:'IBM Plex Sans KR',sans-serif;">추정</span></td>
-            <td class="num tnum">-₩20</td>
-            <td class="num tnum">약 18일</td>
-            <td><span class="pill crit">적자</span></td>
-          </tr>
-          <tr style="background:var(--accent-soft)">
-            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>Mac mini M4 <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">내 기기 · Mac16,10</span></td>
-            <td class="num tnum">4,148 H/s<br><span style="font-size:9.5px;color:var(--accent-ink);font-family:'IBM Plex Sans KR',sans-serif;">실측 2026-10-05</span></td>
-            <td class="num tnum">+₩63</td>
-            <td class="num tnum">약 11일</td>
-            <td><span class="pill warn">미미한 흑자</span></td>
+            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>1스레드, 무제한</td>
+            <td class="num tnum">720 H/s</td>
+            <td class="num tnum">₩37</td>
+            <td class="num tnum">61일~5.6년</td>
+            <td><span class="pill warn">과거 측정</span></td>
           </tr>
           <tr>
-            <td class="device"><span class="swatch" style="background:var(--cat-3)"></span>Mac mini M4 Max</td>
-            <td class="num tnum">7,000 H/s<br><span style="font-size:9.5px;color:var(--ink-faint);font-family:'IBM Plex Sans KR',sans-serif;">추정</span></td>
-            <td class="num tnum">+₩207</td>
-            <td class="num tnum">약 6일</td>
-            <td><span class="pill good">흑자</span></td>
+            <td class="device"><span class="swatch" style="background:var(--cat-3)"></span>1스레드, 80% 제한</td>
+            <td class="num tnum">535 H/s</td>
+            <td class="num tnum">₩27</td>
+            <td class="num tnum">82일~7.5년</td>
+            <td><span class="pill warn">과거 측정</span></td>
+          </tr>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>2스레드, 무제한</td>
+            <td class="num tnum">1,390 H/s</td>
+            <td class="num tnum">₩71</td>
+            <td class="num tnum">32일~2.9년</td>
+            <td><span class="pill warn">과거 측정</span></td>
+          </tr>
+          <tr style="background:var(--accent-soft)">
+            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>2스레드, 80% 제한 <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">현재 운영 중</span></td>
+            <td class="num tnum">1,075 H/s</td>
+            <td class="num tnum">₩55</td>
+            <td class="num tnum">41일~3.7년</td>
+            <td><span class="pill good">가동 중</span></td>
           </tr>
         </tbody>
       </table>
       <div class="table-foot-note">
-        <b>내 기기 해시레이트는 실제 측정값입니다</b> — 2026-10-05, <code style="font-family:'IBM Plex Mono',monospace">xmrig --bench=1M</code> 로컬 벤치마크(풀 연결 없음), 10코어 전부 사용, Huge Pages 미지원(macOS 특성) 상태에서 4,148 H/s. 최소 출금 기준은 SupportXMR 풀의 0.003 XMR로 계산했습니다(선택한 풀에 따라 달라질 수 있음). 전기요금은 가정용 2단계(201~400kWh, 214.6원/kWh+부가세10%+전력산업기반기금3.7%≈244원/kWh)로 계산했으며, <b>구간별로 순수익이 크게 달라집니다</b> — 내 기기(M4) 기준 1단계(약 136원/kWh): <b style="color:var(--good)">+128원</b> · 2단계(244원): <b style="color:var(--warning)">+63원</b> · 3단계(400kWh 초과, 약 349원/kWh): <b style="color:var(--critical)">-0원(손익 거의 0)</b>. M2·M4 Max 해시레이트는 xmrig.com 공개 벤치마크 기반 추정치입니다.
+        <b>전부 2026-10-05~06 실측값입니다</b> — 이전 버전의 4,148 H/s는 <code style="font-family:'IBM Plex Mono',monospace">xmrig --bench=1M</code> 오프라인 벤치(풀 연결 없음, 10코어 전부, 제한 없음)였는데, 실제 풀에 연결해보니 1~2스레드 조건에서는 그보다 훨씬 낮게 나와 표를 전면 교체했습니다. 풀 수수료도 1% 가정에서 SupportXMR 실제값인 0.6%로 수정했습니다. <b>전기요금은 아직 반영 안 됨</b> — 실제 소비 전력(W)을 재려면 sudo 권한이 필요해 현재 대기 중입니다. *최소 출금 기준은 불확실합니다: 지인 실측으로는 0.003 XMR이라 들었으나 SupportXMR 공개 문서상 기본값은 0.1 XMR로 보여, 범위로 표시했습니다(실제 가입 계정에서 확인 전까지는 추정).
       </div>
     </section>
 
@@ -411,9 +419,9 @@
   <!-- ===== LONG-TERM SIMULATION ===== -->
   <section class="card">
     <h3>장기 보유 시뮬레이션 · 누적 채굴 자산의 평가금액</h3>
-    <div class="card-sub">내 Mac mini(M4, 실측 4,148 H/s)로 매일 채굴, 코인을 전혀 매도하지 않고 보유 — 월간 가격 성장률 시나리오별 24개월 후 평가금액. 가격이 오르면 채굴 경쟁도 함께 늘어난다는 가정으로 <b>네트워크 해시레이트도 동일한 비율로 같이 성장</b>시켜 채굴 몫 감소를 반영했습니다. <b style="color:var(--accent-ink)">월 +3%</b> 선은 2024-01~2026-10 실제 월평균 상승률(약 3.6%)에 가장 근접해 현실적 기준선으로 강조했습니다.</div>
+    <div class="card-sub">내 Mac mini(M4, 실측 1,075 H/s · 2스레드 80% 제한 · 현재 운영 설정)로 매일 채굴, 코인을 전혀 매도하지 않고 보유 — 월간 가격 성장률 시나리오별 24개월 후 평가금액. 가격이 오르면 채굴 경쟁도 함께 늘어난다는 가정으로 <b>네트워크 해시레이트도 동일한 비율로 같이 성장</b>시켜 채굴 몫 감소를 반영했습니다. <b style="color:var(--accent-ink)">월 +3%</b> 선은 2024-01~2026-10 실제 월평균 상승률(약 3.6%)에 가장 근접해 현실적 기준선으로 강조했습니다.</div>
 
-    <svg class="chart-svg" viewBox="0 0 700 280" role="img" aria-label="월 성장률 -2%에서 +7%까지 6개 시나리오의 24개월 후 평가금액. 가장 현실적인 월 3% 선은 24개월 후 약 22만원">
+    <svg class="chart-svg" viewBox="0 0 700 280" role="img" aria-label="월 성장률 -2%에서 +7%까지 6개 시나리오의 24개월 후 평가금액. 가장 현실적인 월 3% 선은 24개월 후 약 5만7천원">
       <g stroke="#D9DFD8" stroke-width="1">
         <line x1="56" y1="238" x2="616" y2="238"/>
         <line x1="56" y1="186" x2="616" y2="186"/>
@@ -423,10 +431,10 @@
       </g>
       <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A928C">
         <text x="50" y="242" text-anchor="end">₩0</text>
-        <text x="50" y="190" text-anchor="end">10만</text>
-        <text x="50" y="138" text-anchor="end">20만</text>
-        <text x="50" y="86"  text-anchor="end">30만</text>
-        <text x="50" y="34"  text-anchor="end">40만</text>
+        <text x="50" y="190" text-anchor="end">2.5만</text>
+        <text x="50" y="138" text-anchor="end">5만</text>
+        <text x="50" y="86"  text-anchor="end">7.5만</text>
+        <text x="50" y="34"  text-anchor="end">10만</text>
       </g>
       <!-- x ticks: quarterly to 12mo, then yearly -->
       <g stroke="#C2CAC0" stroke-width="1">
@@ -452,29 +460,29 @@
 
       <!-- de-emphasized scenarios -->
       <g fill="none" stroke="var(--muted-line)" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="56.0,238.0 79.3,234.8 102.7,231.6 126.0,228.5 149.3,225.4 172.7,222.5 196.0,219.5 219.3,216.7 242.7,213.9 266.0,211.1 289.3,208.4 312.7,205.8 336.0,203.2 359.3,200.6 382.7,198.2 406.0,195.7 429.3,193.3 452.7,191.0 476.0,188.7 499.3,186.4 522.7,184.2 546.0,182.1 569.3,180.0 592.7,177.9 616.0,175.9"><title>월 -2% 성장(하락 지속) · 24개월 후 ₩119,503</title></polyline>
-        <polyline points="56.0,238.0 79.3,234.7 102.7,231.5 126.0,228.2 149.3,224.9 172.7,221.7 196.0,218.4 219.3,215.1 242.7,211.9 266.0,208.6 289.3,205.3 312.7,202.1 336.0,198.8 359.3,195.5 382.7,192.3 406.0,189.0 429.3,185.7 452.7,182.5 476.0,179.2 499.3,175.9 522.7,172.6 546.0,169.4 569.3,166.1 592.7,162.8 616.0,159.6"><title>월 0% 성장(가격 정체) · 24개월 후 ₩150,809</title></polyline>
-        <polyline points="56.0,238.0 79.3,234.7 102.7,231.4 126.0,228.0 149.3,224.7 172.7,221.2 196.0,217.8 219.3,214.3 242.7,210.8 266.0,207.2 289.3,203.6 312.7,200.0 336.0,196.4 359.3,192.7 382.7,188.9 406.0,185.1 429.3,181.3 452.7,177.5 476.0,173.6 499.3,169.7 522.7,165.7 546.0,161.7 569.3,157.6 592.7,153.6 616.0,149.4"><title>월 +1% 성장(보수적) · 24개월 후 ₩170,339</title></polyline>
-        <polyline points="56.0,238.0 79.3,234.7 102.7,231.1 126.0,227.4 149.3,223.6 172.7,219.5 196.0,215.2 219.3,210.7 242.7,206.0 266.0,201.1 289.3,195.9 312.7,190.4 336.0,184.7 359.3,178.7 382.7,172.4 406.0,165.8 429.3,158.8 452.7,151.5 476.0,143.8 499.3,135.7 522.7,127.3 546.0,118.4 569.3,109.1 592.7,99.3 616.0,89.0"><title>월 +5% 성장(낙관) · 24개월 후 ₩286,543</title></polyline>
-        <polyline points="56.0,238.0 79.3,234.6 102.7,231.0 126.0,227.1 149.3,223.0 172.7,218.6 196.0,213.8 219.3,208.7 242.7,203.3 266.0,197.5 289.3,191.3 312.7,184.7 336.0,177.5 359.3,169.9 382.7,161.8 406.0,153.1 429.3,143.7 452.7,133.8 476.0,123.1 499.3,111.7 522.7,99.4 546.0,86.4 569.3,72.4 592.7,57.4 616.0,41.4"><title>월 +7% 성장(2025년 급등기 수준) · 24개월 후 ₩378,144</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.6 102.7,231.3 126.0,228.1 149.3,224.9 172.7,221.8 196.0,218.8 219.3,215.8 242.7,212.9 266.0,210.0 289.3,207.2 312.7,204.5 336.0,201.8 359.3,199.1 382.7,196.5 406.0,194.0 429.3,191.5 452.7,189.1 476.0,186.7 499.3,184.3 522.7,182.0 546.0,179.8 569.3,177.6 592.7,175.4 616.0,173.3"><title>월 -2% 성장(하락 지속) · 24개월 후 ₩31,096</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.6 102.7,231.2 126.0,227.8 149.3,224.4 172.7,221.0 196.0,217.6 219.3,214.2 242.7,210.8 266.0,207.4 289.3,204.0 312.7,200.6 336.0,197.2 359.3,193.8 382.7,190.4 406.0,187.0 429.3,183.6 452.7,180.2 476.0,176.8 499.3,173.4 522.7,170.0 546.0,166.6 569.3,163.2 592.7,159.8 616.0,156.4"><title>월 0% 성장(가격 정체) · 24개월 후 ₩39,242</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.6 102.7,231.1 126.0,227.6 149.3,224.1 172.7,220.6 196.0,217.0 219.3,213.3 242.7,209.7 266.0,206.0 289.3,202.2 312.7,198.5 336.0,194.7 359.3,190.8 382.7,186.9 406.0,183.0 429.3,179.0 452.7,175.0 476.0,171.0 499.3,166.9 522.7,162.7 546.0,158.6 569.3,154.4 592.7,150.1 616.0,145.8"><title>월 +1% 성장(보수적) · 24개월 후 ₩44,324</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.5 102.7,230.9 126.0,227.0 149.3,223.0 172.7,218.7 196.0,214.3 219.3,209.6 242.7,204.7 266.0,199.6 289.3,194.2 312.7,188.5 336.0,182.5 359.3,176.3 382.7,169.7 406.0,162.8 429.3,155.6 452.7,147.9 476.0,140.0 499.3,131.6 522.7,122.8 546.0,113.5 569.3,103.8 592.7,93.6 616.0,82.9"><title>월 +5% 성장(낙관) · 24개월 후 ₩74,561</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.5 102.7,230.7 126.0,226.7 149.3,222.4 172.7,217.8 196.0,212.8 219.3,207.6 242.7,201.9 266.0,195.9 289.3,189.4 312.7,182.5 336.0,175.1 359.3,167.1 382.7,158.7 406.0,149.6 429.3,139.9 452.7,129.5 476.0,118.4 499.3,106.5 522.7,93.8 546.0,80.2 569.3,65.6 592.7,50.0 616.0,33.3"><title>월 +7% 성장(2025년 급등기 수준) · 24개월 후 ₩98,396</title></polyline>
       </g>
 
       <!-- highlighted realistic scenario: +3%/월 -->
       <g fill="none" stroke="var(--accent)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round">
-        <polyline points="56.0,238.0 79.3,234.7 102.7,231.3 126.0,227.8 149.3,224.1 172.7,220.4 196.0,216.5 219.3,212.6 242.7,208.5 266.0,204.3 289.3,200.0 312.7,195.5 336.0,190.9 359.3,186.2 382.7,181.3 406.0,176.3 429.3,171.2 452.7,165.8 476.0,160.4 499.3,154.7 522.7,148.9 546.0,142.9 569.3,136.7 592.7,130.4 616.0,123.8"><title>월 +3% 성장 · 현실적 기준선(네트워크 해시레이트도 함께 성장 반영) · 24개월 후 ₩219,547</title></polyline>
+        <polyline points="56.0,238.0 79.3,234.5 102.7,231.0 126.0,227.3 149.3,223.6 172.7,219.7 196.0,215.7 219.3,211.6 242.7,207.3 266.0,202.9 289.3,198.4 312.7,193.8 336.0,189.0 359.3,184.1 382.7,179.0 406.0,173.8 429.3,168.4 452.7,162.9 476.0,157.2 499.3,151.3 522.7,145.3 546.0,139.0 569.3,132.6 592.7,126.0 616.0,119.2"><title>월 +3% 성장 · 현실적 기준선(네트워크 해시레이트도 함께 성장 반영) · 24개월 후 ₩57,128</title></polyline>
       </g>
-      <circle cx="616.0" cy="123.8" r="5.5" fill="var(--accent)" stroke="#171A18" stroke-width="1.4"/>
-      <circle cx="336.0" cy="190.9" r="4" fill="var(--accent)" stroke="#171A18" stroke-width="1.2"/>
+      <circle cx="616.0" cy="119.2" r="5.5" fill="var(--accent)" stroke="#171A18" stroke-width="1.4"/>
+      <circle cx="336.0" cy="189.0" r="4" fill="var(--accent)" stroke="#171A18" stroke-width="1.2"/>
 
       <g font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700">
-        <text x="624" y="123.8" fill="var(--accent-ink)">₩22.0만</text>
+        <text x="624" y="119.2" fill="var(--accent-ink)">₩5.7만</text>
       </g>
       <g font-family="IBM Plex Mono, monospace" font-size="9.5" font-weight="500" fill="var(--ink-faint)">
-        <text x="624" y="41.4">₩37.8만</text>
-        <text x="624" y="89.0">₩28.7만</text>
-        <text x="624" y="149.4">₩17.0만</text>
-        <text x="624" y="163.5">₩15.1만</text>
-        <text x="624" y="178.0">₩12.0만</text>
+        <text x="624" y="33.3">₩9.8만</text>
+        <text x="624" y="82.9">₩7.5만</text>
+        <text x="624" y="145.8">₩4.4만</text>
+        <text x="624" y="160">₩3.9만</text>
+        <text x="624" y="175">₩3.1만</text>
       </g>
     </svg>
 
@@ -488,16 +496,16 @@
     </div>
 
     <div class="sim-end-row">
-      <div class="sim-end-tile"><div class="sim-rate">월 -2%</div><div class="sim-val tnum">₩119,503</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 0%</div><div class="sim-val tnum">₩150,809</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +1%</div><div class="sim-val tnum">₩170,339</div></div>
-      <div class="sim-end-tile highlight"><div class="sim-rate">월 +3%</div><div class="sim-val tnum">₩219,547</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +5%</div><div class="sim-val tnum">₩286,543</div></div>
-      <div class="sim-end-tile"><div class="sim-rate">월 +7%</div><div class="sim-val tnum">₩378,144</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 -2%</div><div class="sim-val tnum">₩31,096</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 0%</div><div class="sim-val tnum">₩39,242</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +1%</div><div class="sim-val tnum">₩44,324</div></div>
+      <div class="sim-end-tile highlight"><div class="sim-rate">월 +3%</div><div class="sim-val tnum">₩57,128</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +5%</div><div class="sim-val tnum">₩74,561</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +7%</div><div class="sim-val tnum">₩98,396</div></div>
     </div>
 
     <div class="table-foot-note">
-      가정: 실측 4,148 H/s(M4) 기준 일일 채굴량, 풀 수수료 1% 반영 × 24개월. <b>이전 버전과 달리 네트워크 해시레이트도 가격과 같은 비율로 매달 커진다고 가정</b>해 내 몫이 서서히 줄어드는 효과를 반영했습니다(가격이 오르면 채굴 경쟁자가 늘어나는 실제 동학에 더 가깝습니다) — 그 결과 월 +3% 시나리오의 24개월 후 평가금액은 ₩295,626(고정 해시레이트 가정)에서 <b>₩219,547</b>로 낮아졌습니다. 코인은 매도하지 않고 전액 보유, 평가금액은 매월 말 시세로 마크투마켓한 값입니다. <b>월 +3%는 2024년 1월~2026년 10월 실제 월평균 상승률(약 3.6%/월)에 가장 근접해 현실적 기준선으로 선택</b>했고, 균형을 위해 하락(−2%)·정체(0%) 시나리오도 함께 표시했습니다. 투자 조언이 아닙니다.
+      가정: 실제 풀 연결 실측 1,075 H/s(2스레드, 80% 제한 — 현재 운영 중인 설정) 기준 일일 채굴량, SupportXMR 실제 수수료 0.6% 반영 × 24개월. 네트워크 해시레이트도 가격과 같은 비율로 매달 커진다고 가정해(가격이 오르면 채굴 경쟁자가 늘어나는 실제 동학) 내 몫이 서서히 줄어드는 효과를 반영했습니다. <b>이전 버전은 오프라인 벤치(4,148 H/s) 기준이라 월 +3% 24개월 후 값이 ₩219,547이었는데, 실제 풀 연결 조건으로 바꾸니 <span style="color:var(--critical)">₩57,128</span>로 약 1/4 수준으로 낮아졌습니다</b> — 실측의 중요성을 보여주는 대목입니다. 코인은 매도하지 않고 전액 보유, 평가금액은 매월 말 시세로 마크투마켓한 값입니다. 전기요금은 미반영(총수익 기준)입니다. <b>월 +3%는 2024년 1월~2026년 10월 실제 월평균 상승률(약 3.6%/월)에 가장 근접해 현실적 기준선으로 선택</b>했고, 균형을 위해 하락(−2%)·정체(0%) 시나리오도 함께 표시했습니다. 투자 조언이 아닙니다.
     </div>
   </section>
 
@@ -505,48 +513,48 @@
   <section>
     <div class="section-head">
       <h2>채굴 실행 계획</h2>
-      <span class="section-note">상태 · 전부 실행 전</span>
+      <span class="section-note">상태 · 2026-10-06 기준 6단계 중 4단계 완료</span>
     </div>
     <div class="plan-list">
       <div class="plan-step">
         <div class="num">01</div>
         <div class="step-body">
           <div class="step-title">XMRig 설치 (macOS ARM 빌드)</div>
-          <div class="step-desc">공식 xmrig.com에서 Apple Silicon용 바이너리 다운로드</div>
+          <div class="step-desc">공식 GitHub 릴리스에서 SHA256·GPG 서명 검증 후 설치 완료</div>
         </div>
-        <div class="status-chip next">다음 단계</div>
+        <div class="status-chip done">완료</div>
       </div>
       <div class="plan-step">
         <div class="num">02</div>
         <div class="step-body">
           <div class="step-title">모네로 지갑 생성</div>
-          <div class="step-desc">공식 GUI 지갑 또는 Cake Wallet에서 수신 주소 발급</div>
+          <div class="step-desc">공식 monero-wallet-cli(해시 검증)로 생성, 시드는 본인만 종이에 보관 — 저장 위치만 권한 600으로 확인</div>
         </div>
-        <div class="status-chip">계획</div>
+        <div class="status-chip done">완료</div>
       </div>
       <div class="plan-step">
         <div class="num">03</div>
         <div class="step-body">
           <div class="step-title">채굴 풀 선정</div>
-          <div class="step-desc">수수료·최소 출금 기준 비교 후 풀 주소/포트 확보</div>
+          <div class="step-desc">SupportXMR(TLS 443), 워커명 지정 완료</div>
         </div>
-        <div class="status-chip">계획</div>
+        <div class="status-chip done">완료</div>
       </div>
       <div class="plan-step">
         <div class="num">04</div>
         <div class="step-body">
-          <div class="step-title">config.json 설정 및 가동</div>
-          <div class="step-desc">지갑 주소·풀 정보 입력 후 백그라운드로 24시간 구동</div>
+          <div class="step-title">실행 — 2스레드, nice 19, 80% 듀티사이클 제한</div>
+          <div class="step-desc">발열 우려로 전체 가동 대신 80%로 스로틀링하여 운영 중</div>
         </div>
-        <div class="status-chip">계획</div>
+        <div class="status-chip done">가동 중</div>
       </div>
       <div class="plan-step">
         <div class="num">05</div>
         <div class="step-body">
-          <div class="step-title">해시레이트·발열 모니터링</div>
-          <div class="step-desc">장시간 구동 시 쓰로틀링 여부, 실제 전력 소비 측정</div>
+          <div class="step-title">해시레이트·이상징후 모니터링</div>
+          <div class="step-desc">해시레이트 급락·프로세스 중단 감시 중 · 온도 실측은 sudo 설정 대기</div>
         </div>
-        <div class="status-chip">계획</div>
+        <div class="status-chip next">진행 중</div>
       </div>
       <div class="plan-step">
         <div class="num">06</div>
@@ -554,7 +562,7 @@
           <div class="step-title">최소 출금 기준 도달 시 정산</div>
           <div class="step-desc">풀 잔고가 기준치를 넘으면 지갑으로 자동/수동 출금</div>
         </div>
-        <div class="status-chip">계획</div>
+        <div class="status-chip">대기 중</div>
       </div>
     </div>
   </section>
@@ -669,12 +677,26 @@
           <div class="check-desc">지갑 주소나 채굴 풀 대시보드 링크는 절대 커밋하지 마세요. 현재는 게시되어 있지 않으며, 이 상태를 계속 유지해야 합니다.</div>
         </div>
       </div>
+      <div class="check-item info">
+        <span class="check-tag">참고</span>
+        <div class="check-body">
+          <div class="check-title">재부팅 시 자동 재시작은 수동으로만 활성화됩니다</div>
+          <div class="check-desc">AI 에이전트가 "항상 재시작되는 백그라운드 서비스"를 자동으로 등록하는 것은 안전장치에 의해 차단됩니다(악성코드 패턴과 유사해서). 진짜 영속 실행이 필요하면 준비된 launchd 설정을 본인이 직접 한 줄로 활성화해야 합니다.</div>
+        </div>
+      </div>
+      <div class="check-item info">
+        <span class="check-tag">참고</span>
+        <div class="check-body">
+          <div class="check-title">이상징후 감시(해시레이트 급락·프로세스 중단) 가동 중</div>
+          <div class="check-desc">5분 주기로 자동 감시하며, 감지 시 카카오톡·이메일로 알림이 갑니다. CPU 온도 감시는 별도 sudo 권한 설정이 필요해 아직 비활성 상태입니다.</div>
+        </div>
+      </div>
     </div>
   </section>
 
   <footer>
     <div class="disclaimer">
-      본 대시보드는 2026년 10월 5일 기준 공개 자료와 내 Mac mini(M4)에서 직접 측정한 로컬 벤치마크를 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금·채굴 풀 조건은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
+      본 대시보드는 2026년 10월 6일 기준 공개 자료와 내 Mac mini(M4)에서 실제 SupportXMR 풀에 연결해 측정한 실측값을 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금·채굴 풀 조건은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
     </div>
     <div class="sources">
       SOURCES —
