@@ -264,9 +264,9 @@
         <div class="delta flat">RandomX · 전체 네트워크</div>
       </div>
       <div class="stat-tile">
-        <div class="label">일일 총수익 (현재 운영 중 · 2스레드 80%)</div>
-        <div class="value tnum" style="color:var(--accent-ink)">~₩55</div>
-        <div class="delta flat">1,075 H/s 실측(실제 풀 연결) · 전기비 제외 · 0.6% 풀수수료 반영</div>
+        <div class="label">일일 총수익 (현재 운영 중 · 10코어 무제한)</div>
+        <div class="value tnum" style="color:var(--accent-ink)">~₩206</div>
+        <div class="delta flat">4,120 H/s 실측(실제 풀 연결) · 전기비 제외 · 0.6% 풀수수료 반영</div>
       </div>
     </div>
   </section>
@@ -400,21 +400,109 @@
             <td class="num tnum">32일~2.9년</td>
             <td><span class="pill warn">과거 측정</span></td>
           </tr>
-          <tr style="background:var(--accent-soft)">
-            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>2스레드, 80% 제한 <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">현재 운영 중</span></td>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>2스레드, 80% 제한</td>
             <td class="num tnum">1,075 H/s</td>
             <td class="num tnum">₩55</td>
             <td class="num tnum">41일~3.7년</td>
+            <td><span class="pill warn">과거 측정</span></td>
+          </tr>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>4코어, 무제한</td>
+            <td class="num tnum">2,672 H/s</td>
+            <td class="num tnum">₩136</td>
+            <td class="num tnum">17일~1.5년</td>
+            <td><span class="pill warn">과거 측정</span></td>
+          </tr>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>6코어, 무제한</td>
+            <td class="num tnum">3,421 H/s</td>
+            <td class="num tnum">₩173</td>
+            <td class="num tnum">13일~1.2년</td>
+            <td><span class="pill warn">과거 측정</span></td>
+          </tr>
+          <tr style="background:var(--accent-soft)">
+            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>10코어, 무제한 <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">현재 운영 중</span></td>
+            <td class="num tnum">4,120 H/s</td>
+            <td class="num tnum">₩209</td>
+            <td class="num tnum">11일~1년</td>
             <td><span class="pill good">가동 중</span></td>
           </tr>
         </tbody>
       </table>
       <div class="table-foot-note">
-        <b>전부 2026-10-05~06 실측값입니다</b> — 이전 버전의 4,148 H/s는 <code style="font-family:'IBM Plex Mono',monospace">xmrig --bench=1M</code> 오프라인 벤치(풀 연결 없음, 10코어 전부, 제한 없음)였는데, 실제 풀에 연결해보니 1~2스레드 조건에서는 그보다 훨씬 낮게 나와 표를 전면 교체했습니다. 풀 수수료도 1% 가정에서 SupportXMR 실제값인 0.6%로 수정했습니다. <b>전기요금은 아직 반영 안 됨</b> — 실제 소비 전력(W)을 재려면 sudo 권한이 필요해 현재 대기 중입니다. *최소 출금 기준은 불확실합니다: 지인 실측으로는 0.003 XMR이라 들었으나 SupportXMR 공개 문서상 기본값은 0.1 XMR로 보여, 범위로 표시했습니다(실제 가입 계정에서 확인 전까지는 추정).
+        <b>전부 2026-10-05~06 실측값입니다</b> — 이전 버전의 4,148 H/s는 <code style="font-family:'IBM Plex Mono',monospace">xmrig --bench=1M</code> 오프라인 벤치(풀 연결 없음, 10코어 전부, 제한 없음)였는데, 실제 풀에 연결해보니 1~2스레드 조건에서는 그보다 훨씬 낮게 나와 표를 전면 교체했습니다. 풀 수수료도 1% 가정에서 SupportXMR 실제값인 0.6%로 수정했습니다. <b>현재는 발열 우려를 감수하고 10코어 무제한으로 1~2일 테스트 중</b>(사용자 지시)이며, 별도 지시가 있을 때까지 이 설정을 유지합니다. 참고: 스로틀링(예: "10코어 80%")은 코어를 쉬게 하는 시간이 짧아 발열 감소 효과가 크지 않습니다 — 발열을 줄이려면 스로틀 비율보다 "코어 개수"를 줄이는 게 더 효과적입니다. <b>전기요금은 아직 반영 안 됨</b>(실제 소비 전력(W) 측정은 보류). *최소 출금 기준은 불확실합니다: 0.003 XMR이라는 얘기도 있었으나 SupportXMR 공개 문서상 기본값은 0.1 XMR로 보여, 범위로 표시했습니다(실제 계정에서 확인 전까지는 추정).
       </div>
     </section>
 
   </div>
+
+  <!-- ===== LIVE STATUS SNAPSHOT ===== -->
+  <section class="card">
+    <h3>실시간 채굴 현황 스냅샷</h3>
+    <div class="card-sub">SupportXMR 풀 공개 API + 로컬 상태 점검 기준 — <b>2026-10-06 01:38 KST</b> 캡처(실시간 갱신 아님, 수동 갱신). 지갑 주소는 보안상 이 페이지에 표시하지 않습니다.</div>
+    <div class="stat-row" style="margin-top:4px;">
+      <div class="stat-tile">
+        <div class="label">해시레이트</div>
+        <div class="value tnum">4,120 <small>H/s</small></div>
+        <div class="delta flat">풀 서버 기준 보고값</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">미지급 적립금</div>
+        <div class="value tnum">0.00000023 <small>XMR</small></div>
+        <div class="delta flat">≈ ₩0.17 · PPLNS라 계단식 증가</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">지급 완료 / 지갑 잔액</div>
+        <div class="value tnum">0 <small>XMR</small></div>
+        <div class="delta flat">아직 출금 기준 미달 — 정상</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">프로세스 · CPU 열압력</div>
+        <div class="value tnum" style="color:var(--good);font-size:19px;">가동 중 · Nominal</div>
+        <div class="delta flat">5분 주기 자동 감시 가동 중</div>
+      </div>
+    </div>
+    <div class="table-foot-note">
+      이 스냅샷과 동일한 내용이 매일 09:03·15:05·21:06(KST)에 카카오톡·이메일로 자동 발송됩니다(알림은 이 저장소와 무관하게 비공개 채널로만 전송). 해시레이트 급락, 프로세스 중단, 열압력 상승(Nominal 이탈) 시에도 별도 알림이 갑니다.
+    </div>
+  </section>
+
+  <!-- ===== HOW MINING WORKS ===== -->
+  <section>
+    <div class="section-head">
+      <h2>채굴의 원리</h2>
+      <span class="section-note">PPLNS 풀 마이닝 기준</span>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-label">01 해싱</div>
+        <div class="flow-main">RandomX 연산</div>
+        <div class="flow-detail">CPU가 후보 해시를 반복 계산</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-label">02 share 제출</div>
+        <div class="flow-main">난이도 통과분만 인정</div>
+        <div class="flow-detail">풀이 정한 난이도 이상인 해시만 제출·승인</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-label">03 블록 발견 시 분배</div>
+        <div class="flow-main">PPLNS 방식</div>
+        <div class="flow-detail">풀 전체가 블록을 찾아야, 최근 기여도 비례로 분배</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-label">04 출금</div>
+        <div class="flow-main">기준치 도달 시 지갑 전송</div>
+        <div class="flow-detail">최소 출금(0.003~0.1 XMR 추정) 넘으면 자동 전송</div>
+      </div>
+    </div>
+    <div class="verdict">
+      <b>핵심</b> — PPLNS는 "일한 만큼 바로바로 쌓이는" 구조가 아니라 "풀이 실제로 블록을 찾을 때마다 계단식으로 쌓이는" 구조입니다. 미지급액이 한동안 그대로였다가 갑자기 뛰는 게 정상이고, 고장이 아닙니다. 모네로 네트워크 전체 해시레이트는 6.3 GH/s인데 이 맥미니는 4,120 H/s — 전체의 0.00007% 수준이라, <b>솔로 채굴로는 사실상 평생 블록을 못 찾습니다.</b> 풀에 합류해 작은 share라도 꾸준히 쌓는 게 개인 CPU 채굴에서 유일하게 현실적인 방법입니다.
+    </div>
+  </section>
 
   <!-- ===== LONG-TERM SIMULATION ===== -->
   <section class="card">
@@ -513,7 +601,7 @@
   <section>
     <div class="section-head">
       <h2>채굴 실행 계획</h2>
-      <span class="section-note">상태 · 2026-10-06 기준 6단계 중 4단계 완료</span>
+      <span class="section-note">상태 · 2026-10-06 기준 6단계 중 5단계 완료/가동</span>
     </div>
     <div class="plan-list">
       <div class="plan-step">
@@ -551,10 +639,10 @@
       <div class="plan-step">
         <div class="num">05</div>
         <div class="step-body">
-          <div class="step-title">해시레이트·이상징후 모니터링</div>
-          <div class="step-desc">해시레이트 급락·프로세스 중단 감시 중 · 온도 실측은 sudo 설정 대기</div>
+          <div class="step-title">해시레이트·이상징후·온도 모니터링</div>
+          <div class="step-desc">해시레이트 급락·프로세스 중단·CPU 열압력(Nominal 이탈) 전부 감시 중 · 하루 3회 정기 리포트 발송</div>
         </div>
-        <div class="status-chip next">진행 중</div>
+        <div class="status-chip done">가동 중</div>
       </div>
       <div class="plan-step">
         <div class="num">06</div>
@@ -688,7 +776,7 @@
         <span class="check-tag">참고</span>
         <div class="check-body">
           <div class="check-title">이상징후 감시(해시레이트 급락·프로세스 중단) 가동 중</div>
-          <div class="check-desc">5분 주기로 자동 감시하며, 감지 시 카카오톡·이메일로 알림이 갑니다. CPU 온도 감시는 별도 sudo 권한 설정이 필요해 아직 비활성 상태입니다.</div>
+          <div class="check-desc">5분 주기로 자동 감시하며, 감지 시 카카오톡·이메일로 알림이 갑니다. CPU 열압력(과열) 감시도 사용자가 직접 설정한 범위 한정 sudo 권한으로 활성화되어 있습니다. 매일 09:03·15:05·21:06(KST)에는 정기 현황도 발송됩니다.</div>
         </div>
       </div>
     </div>
