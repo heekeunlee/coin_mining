@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>XMR Mining Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#ECF0EC;
+    --surface:#FFFFFF;
+    --surface-sunken:#F2F5F1;
+    --ink:#171A18;
+    --ink-muted:#5B6460;
+    --ink-faint:#8A928C;
+    --border:#D9DFD8;
+    --border-strong:#C2CAC0;
+    --accent:#E8590C;
+    --accent-ink:#A3400A;
+    --accent-soft:#FBE3D1;
+    --good:#1E8A5F;
+    --good-soft:#DCF0E6;
+    --warning:#A3690A;
+    --warning-soft:#F6E7CF;
+    --critical:#C23B33;
+    --critical-soft:#F7DEDB;
+    --cat-1:#E8590C;
+    --cat-2:#0566A6;
+    --cat-3:#A6852A;
+    --shadow: 0 1px 2px rgba(23,26,24,0.04), 0 4px 14px rgba(23,26,24,0.06);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;background:var(--bg);color:var(--ink);}
+  body{
+    font-family:'IBM Plex Sans KR','IBM Plex Sans',-apple-system,sans-serif;
+    font-size:15px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace;}
+  .tnum{font-variant-numeric:tabular-nums;}
+  h1,h2,h3{font-family:'IBM Plex Mono',ui-monospace,monospace;text-wrap:balance;margin:0;}
+  a{color:var(--accent-ink);}
+  .wrap{max-width:1120px;margin:0 auto;padding:40px 24px 80px;}
+
+  /* ---------- Header ---------- */
+  .masthead{
+    display:flex;justify-content:space-between;align-items:flex-end;
+    gap:24px;flex-wrap:wrap;
+    border-bottom:2px solid var(--ink);
+    padding-bottom:20px;margin-bottom:28px;
+  }
+  .masthead .title-block .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;letter-spacing:.11em;
+    color:var(--accent-ink);text-transform:uppercase;font-weight:600;
+    display:flex;align-items:center;gap:8px;margin-bottom:8px;
+  }
+  .eyebrow .dot{width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;}
+  .masthead h1{font-size:28px;letter-spacing:-0.01em;font-weight:700;}
+  .masthead .sub{color:var(--ink-muted);font-size:14px;margin-top:6px;max-width:48ch;}
+  .meta-chip-row{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end;}
+  .chip{
+    font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:600;letter-spacing:.03em;
+    padding:5px 10px;border-radius:5px;border:1px solid var(--border-strong);
+    background:var(--surface);color:var(--ink-muted);white-space:nowrap;
+  }
+  .chip.accent{background:var(--accent-soft);border-color:#F0C19C;color:var(--accent-ink);}
+
+  /* ---------- Section scaffolding ---------- */
+  section{margin-bottom:44px;}
+  .section-head{display:flex;align-items:baseline;justify-content:space-between;gap:16px;margin-bottom:16px;flex-wrap:wrap;}
+  .section-head h2{font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);font-weight:600;}
+  .section-head .section-note{font-size:12.5px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- Stat tiles ---------- */
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .stat-tile{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:16px 18px;box-shadow:var(--shadow);
+    display:flex;flex-direction:column;gap:6px;min-height:108px;justify-content:space-between;
+  }
+  .stat-tile .label{font-size:11.5px;color:var(--ink-muted);letter-spacing:.04em;text-transform:uppercase;font-family:'IBM Plex Mono',monospace;}
+  .stat-tile .value{font-family:'IBM Plex Mono',monospace;font-size:26px;font-weight:700;letter-spacing:-0.01em;}
+  .stat-tile .value small{font-size:13px;font-weight:500;color:var(--ink-muted);}
+  .stat-tile .delta{font-size:12.5px;font-weight:600;display:flex;align-items:center;gap:5px;}
+  .delta.up{color:var(--good);}
+  .delta.down{color:var(--critical);}
+  .delta.flat{color:var(--ink-faint);}
+
+  /* ---------- Two column grid ---------- */
+  .two-col{display:grid;grid-template-columns:1.3fr 1fr;gap:18px;align-items:start;}
+  .card{
+    background:var(--surface);border:1px solid var(--border);border-radius:10px;
+    padding:22px;box-shadow:var(--shadow);
+  }
+  .card h3{font-size:13.5px;letter-spacing:.03em;margin-bottom:4px;}
+  .card .card-sub{font-size:12.5px;color:var(--ink-muted);margin-bottom:18px;}
+
+  /* ---------- Price chart ---------- */
+  .chart-svg{width:100%;height:auto;display:block;}
+  .chart-legend{display:flex;gap:18px;margin-top:10px;font-size:11.5px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;flex-wrap:wrap;}
+  .chart-legend span.sw{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--accent);margin-right:5px;vertical-align:-1px;}
+
+  /* ---------- Profitability table ---------- */
+  table{width:100%;border-collapse:collapse;font-size:13px;}
+  thead th{
+    text-align:left;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.06em;
+    text-transform:uppercase;color:var(--ink-faint);font-weight:600;
+    padding:0 8px 8px;border-bottom:1px solid var(--border-strong);
+  }
+  tbody td{padding:11px 8px;border-bottom:1px solid var(--border);font-family:'IBM Plex Mono',monospace;}
+  tbody tr:last-child td{border-bottom:none;}
+  td.device{font-family:'IBM Plex Sans KR','IBM Plex Sans',sans-serif;font-weight:600;display:flex;align-items:center;gap:8px;}
+  .swatch{width:9px;height:9px;border-radius:2px;display:inline-block;flex:none;}
+  td.num{text-align:right;}
+  .pill{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;padding:3px 8px;border-radius:5px;
+    display:inline-block;letter-spacing:.02em;
+  }
+  .pill.good{background:var(--good-soft);color:var(--good);}
+  .pill.warn{background:var(--warning-soft);color:var(--warning);}
+  .table-foot-note{margin-top:14px;font-size:12px;color:var(--ink-faint);line-height:1.6;}
+
+  /* ---------- Mining plan ---------- */
+  .plan-list{display:flex;flex-direction:column;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:var(--surface);box-shadow:var(--shadow);}
+  .plan-step{
+    display:grid;grid-template-columns:42px 1fr 108px;gap:14px;align-items:center;
+    padding:15px 18px;border-bottom:1px solid var(--border);
+  }
+  .plan-step:last-child{border-bottom:none;}
+  .plan-step .num{font-family:'IBM Plex Mono',monospace;font-weight:700;color:var(--accent-ink);font-size:14px;}
+  .plan-step .step-body .step-title{font-weight:600;font-size:13.5px;margin-bottom:2px;}
+  .plan-step .step-body .step-desc{font-size:12.5px;color:var(--ink-muted);}
+  .status-chip{
+    font-family:'IBM Plex Mono',monospace;font-size:10.5px;font-weight:700;letter-spacing:.03em;
+    padding:4px 9px;border-radius:5px;text-align:center;background:var(--surface-sunken);color:var(--ink-faint);
+    border:1px solid var(--border);justify-self:end;
+  }
+  .status-chip.next{background:var(--accent-soft);color:var(--accent-ink);border-color:#F0C19C;}
+
+  /* ---------- Outlook pro/con ---------- */
+  .outlook-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .outlook-card{border-radius:10px;padding:20px 22px;border:1px solid var(--border);background:var(--surface);box-shadow:var(--shadow);}
+  .outlook-card.bull{border-top:3px solid var(--good);}
+  .outlook-card.risk{border-top:3px solid var(--critical);}
+  .outlook-card h3{display:flex;align-items:center;gap:8px;font-size:13px;margin-bottom:14px;}
+  .outlook-card h3 .tag{font-size:10.5px;padding:2px 8px;border-radius:4px;font-weight:700;letter-spacing:.03em;}
+  .outlook-card.bull h3 .tag{background:var(--good-soft);color:var(--good);}
+  .outlook-card.risk h3 .tag{background:var(--critical-soft);color:var(--critical);}
+  .outlook-card ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:11px;}
+  .outlook-card li{font-size:13px;color:var(--ink);padding-left:16px;position:relative;line-height:1.55;}
+  .outlook-card li::before{content:"";position:absolute;left:0;top:7px;width:6px;height:6px;border-radius:50%;}
+  .outlook-card.bull li::before{background:var(--good);}
+  .outlook-card.risk li::before{background:var(--critical);}
+  .outlook-card li b{font-weight:600;}
+  .verdict{
+    margin-top:18px;background:var(--surface-sunken);border:1px dashed var(--border-strong);
+    border-radius:8px;padding:14px 16px;font-size:12.5px;color:var(--ink-muted);
+  }
+  .verdict b{color:var(--ink);}
+
+  /* ---------- Cashout ---------- */
+  .flow{display:flex;align-items:stretch;gap:0;flex-wrap:wrap;}
+  .flow-step{
+    flex:1;min-width:150px;background:var(--surface);border:1px solid var(--border);border-radius:8px;
+    padding:14px 16px;position:relative;
+  }
+  .flow-step .flow-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:6px;}
+  .flow-step .flow-main{font-weight:600;font-size:13.5px;}
+  .flow-step .flow-detail{font-size:11.5px;color:var(--ink-muted);margin-top:4px;}
+  .flow-arrow{display:flex;align-items:center;justify-content:center;width:28px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;font-size:16px;flex:none;}
+  .ban-banner{
+    margin-top:16px;display:flex;gap:10px;align-items:flex-start;
+    background:var(--critical-soft);border:1px solid #E7B9B4;border-radius:8px;padding:12px 14px;
+    font-size:12.5px;color:#7A2822;
+  }
+  .ban-banner b{color:var(--critical);}
+
+  /* ---------- Footer ---------- */
+  footer{border-top:1px solid var(--border-strong);padding-top:20px;margin-top:8px;}
+  footer .disclaimer{font-size:12px;color:var(--ink-faint);line-height:1.7;max-width:760px;}
+  footer .sources{margin-top:14px;font-size:11.5px;color:var(--ink-faint);font-family:'IBM Plex Mono',monospace;line-height:1.9;}
+  footer .sources a{color:var(--ink-muted);text-decoration:underline;text-decoration-color:var(--border-strong);}
+
+  @media (max-width:860px){
+    .stat-row{grid-template-columns:repeat(2,1fr);}
+    .two-col{grid-template-columns:1fr;}
+    .outlook-grid{grid-template-columns:1fr;}
+    .plan-step{grid-template-columns:32px 1fr;grid-template-rows:auto auto;}
+    .plan-step .status-chip{grid-column:2;justify-self:start;margin-top:6px;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="masthead">
+    <div class="title-block">
+      <div class="eyebrow"><span class="dot"></span>HOME CPU MINING · 모네로(XMR) 운영 대시보드</div>
+      <h1>XMR Mining Desk</h1>
+      <div class="sub">맥미니 CPU 채굴 타당성 분석과 시세 추적을 한 장에 정리한 개인용 대시보드.</div>
+    </div>
+    <div class="meta-chip-row">
+      <span class="chip accent">DATA AS OF 2026-10-05</span>
+      <span class="chip">취미 · 비영리 목적</span>
+    </div>
+  </header>
+
+  <!-- ===== STAT ROW ===== -->
+  <section>
+    <div class="stat-row">
+      <div class="stat-tile">
+        <div class="label">XMR / KRW</div>
+        <div class="value tnum">₩743,837</div>
+        <div class="delta up">▲ 2.60% · 24H</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">XMR / USD</div>
+        <div class="value tnum">$553.71</div>
+        <div class="delta up">▲ 28.09% · YTD 2026</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">네트워크 해시레이트</div>
+        <div class="value tnum">6.3 <small>GH/s</small></div>
+        <div class="delta flat">RandomX · 전체 네트워크</div>
+      </div>
+      <div class="stat-tile">
+        <div class="label">예상 일일 순수익 (M2)</div>
+        <div class="value tnum" style="color:var(--good)">+₩6</div>
+        <div class="delta flat">풀 수수료·전기세 반영</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== PRICE + PROFIT ===== -->
+  <div class="two-col">
+
+    <section class="card" style="margin-bottom:0;">
+      <h3>시세 흐름 · 주요 변곡점</h3>
+      <div class="card-sub">2024–2026년 연간 종가 및 사상 최고치 기준, USD</div>
+
+      <svg class="chart-svg" viewBox="0 0 640 280" role="img" aria-label="모네로 가격 변동: 2024년 종가 193.60달러에서 2026년 1월 794.68달러로 급등 후 10월 553.71달러">
+        <!-- gridlines -->
+        <g stroke="#D9DFD8" stroke-width="1">
+          <line x1="56" y1="30"  x2="616" y2="30"/>
+          <line x1="56" y1="88"  x2="616" y2="88"/>
+          <line x1="56" y1="146" x2="616" y2="146"/>
+          <line x1="56" y1="204" x2="616" y2="204"/>
+          <line x1="56" y1="238" x2="616" y2="238"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A928C">
+          <text x="50" y="34" text-anchor="end">$800</text>
+          <text x="50" y="92" text-anchor="end">$600</text>
+          <text x="50" y="150" text-anchor="end">$400</text>
+          <text x="50" y="208" text-anchor="end">$200</text>
+          <text x="50" y="242" text-anchor="end">$0</text>
+        </g>
+        <!-- axis line -->
+        <line x1="56" y1="238" x2="616" y2="238" stroke="#C2CAC0" stroke-width="1.2"/>
+
+        <!-- data path: pts at x=96,226,356,436,556 ; y scaled 0-800 -> 238..30 (range208px/800) -->
+        <!-- 2024 close 193.60 -> y=238-193.6*0.26=187.7 -->
+        <!-- 2025 close 434.08 -> y=238-434.08*0.26=125.1 -->
+        <!-- 2026 Jan peak 794.68 -> y=238-794.68*0.26=32.4 -->
+        <!-- 2026 Feb ~340 -> y=238-340*0.26=149.6 -->
+        <!-- 2026 Oct 553.71 -> y=238-553.71*0.26=93.0 -->
+        <polyline points="96,187.7 226,125.1 356,32.4 436,149.6 556,93.0"
+                  fill="none" stroke="#E8590C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+        <g fill="#E8590C">
+          <circle cx="96"  cy="187.7" r="4.5"/>
+          <circle cx="226" cy="125.1" r="4.5"/>
+          <circle cx="356" cy="32.4"  r="5.5"/>
+          <circle cx="436" cy="149.6" r="4.5"/>
+          <circle cx="556" cy="93.0"  r="5.5" stroke="#171A18" stroke-width="1.4"/>
+        </g>
+
+        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#171A18" font-weight="600">
+          <text x="96"  y="203" text-anchor="middle">$193.60</text>
+          <text x="226" y="141" text-anchor="middle">$434.08</text>
+          <text x="356" y="22"  text-anchor="middle">$794.68</text>
+          <text x="436" y="165" text-anchor="middle">$340</text>
+          <text x="556" y="78"  text-anchor="middle">$553.71</text>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5B6460">
+          <text x="96"  y="256" text-anchor="middle">2024 종가</text>
+          <text x="226" y="256" text-anchor="middle">2025 종가</text>
+          <text x="356" y="256" text-anchor="middle">2026-01 최고</text>
+          <text x="436" y="256" text-anchor="middle">2026-02</text>
+          <text x="556" y="256" text-anchor="middle">2026-10 현재</text>
+        </g>
+      </svg>
+      <div class="chart-legend"><span><span class="sw"></span>XMR/USD 종가·주요 변곡점</span></div>
+    </section>
+
+    <section class="card" style="margin-bottom:0;">
+      <h3>기기별 24시간 채굴 수익성</h3>
+      <div class="card-sub">블록 보상 0.6 XMR / 2분 · 네트워크 6.3 GH/s 기준</div>
+
+      <table>
+        <thead>
+          <tr><th>기기</th><th class="num">해시레이트</th><th class="num">일 순수익</th><th>판정</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>Mac mini M2</td>
+            <td class="num tnum">2,500 H/s</td>
+            <td class="num tnum">+₩6</td>
+            <td><span class="pill warn">손익 ±0</span></td>
+          </tr>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>Mac mini M4</td>
+            <td class="num tnum">4,000 H/s</td>
+            <td class="num tnum">+₩82</td>
+            <td><span class="pill warn">미미한 흑자</span></td>
+          </tr>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-3)"></span>Mac mini M4 Max</td>
+            <td class="num tnum">7,000 H/s</td>
+            <td class="num tnum">+₩233</td>
+            <td><span class="pill good">소액 흑자</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-foot-note">
+        전기요금 25W·0.6kWh/일·200원/kWh 가정, 풀 수수료 1% 반영한 추정치입니다. 실제 수치는 전기요금 구간, 채굴 풀, 시세에 따라 크게 달라집니다. 풀의 최소 출금 기준은 통상 0.01~0.1 XMR인데, 이 속도로는 M2가 기준치 도달까지 최대 1.6년, M4 Max는 최소 3주가 걸립니다.
+      </div>
+    </section>
+
+  </div>
+
+  <!-- ===== MINING PLAN ===== -->
+  <section>
+    <div class="section-head">
+      <h2>채굴 실행 계획</h2>
+      <span class="section-note">상태 · 전부 실행 전</span>
+    </div>
+    <div class="plan-list">
+      <div class="plan-step">
+        <div class="num">01</div>
+        <div class="step-body">
+          <div class="step-title">XMRig 설치 (macOS ARM 빌드)</div>
+          <div class="step-desc">공식 xmrig.com에서 Apple Silicon용 바이너리 다운로드</div>
+        </div>
+        <div class="status-chip next">다음 단계</div>
+      </div>
+      <div class="plan-step">
+        <div class="num">02</div>
+        <div class="step-body">
+          <div class="step-title">모네로 지갑 생성</div>
+          <div class="step-desc">공식 GUI 지갑 또는 Cake Wallet에서 수신 주소 발급</div>
+        </div>
+        <div class="status-chip">계획</div>
+      </div>
+      <div class="plan-step">
+        <div class="num">03</div>
+        <div class="step-body">
+          <div class="step-title">채굴 풀 선정</div>
+          <div class="step-desc">수수료·최소 출금 기준 비교 후 풀 주소/포트 확보</div>
+        </div>
+        <div class="status-chip">계획</div>
+      </div>
+      <div class="plan-step">
+        <div class="num">04</div>
+        <div class="step-body">
+          <div class="step-title">config.json 설정 및 가동</div>
+          <div class="step-desc">지갑 주소·풀 정보 입력 후 백그라운드로 24시간 구동</div>
+        </div>
+        <div class="status-chip">계획</div>
+      </div>
+      <div class="plan-step">
+        <div class="num">05</div>
+        <div class="step-body">
+          <div class="step-title">해시레이트·발열 모니터링</div>
+          <div class="step-desc">장시간 구동 시 쓰로틀링 여부, 실제 전력 소비 측정</div>
+        </div>
+        <div class="status-chip">계획</div>
+      </div>
+      <div class="plan-step">
+        <div class="num">06</div>
+        <div class="step-body">
+          <div class="step-title">최소 출금 기준 도달 시 정산</div>
+          <div class="step-desc">풀 잔고가 기준치를 넘으면 지갑으로 자동/수동 출금</div>
+        </div>
+        <div class="status-chip">계획</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== OUTLOOK ===== -->
+  <section>
+    <div class="section-head">
+      <h2>장기 가치 전망</h2>
+      <span class="section-note">투자 조언 아님 · 공개 자료 기반 해석</span>
+    </div>
+    <div class="outlook-grid">
+      <div class="outlook-card bull">
+        <h3><span class="tag">BULL</span>상승 요인</h3>
+        <ul>
+          <li><b>구조적 프라이버시 수요</b> — 금융 사찰 우회·검열 저항 니즈는 규제와 무관하게 지속됨</li>
+          <li><b>ASIC 저항성(RandomX)</b> — 일반 CPU로 채굴 참여가 가능해 네트워크 분산성이 유지됨</li>
+          <li><b>유일무이한 포지션</b> — 온체인 완전 익명성을 실질적으로 구현한 거의 유일한 코인</li>
+        </ul>
+      </div>
+      <div class="outlook-card risk">
+        <h3><span class="tag">RISK</span>하락·리스크 요인</h3>
+        <ul>
+          <li><b>규제 압박이 핵심 변수</b> — 한국 등 거래소 상장 금지국 확대, 유럽 일부 거래소 지역별 폐지</li>
+          <li><b>유동성 축소</b> — AML 규제가 강화될수록 접근 가능한 시장이 좁아짐</li>
+          <li><b>시장 사이클 종속</b> — 비트코인 등 메이저 코인 하락 시 동반 하락하는 경향</li>
+        </ul>
+      </div>
+    </div>
+    <div class="verdict"><b>요약</b> — 기술적 가치(프라이버시)는 견고하지만 규제 리스크가 가격 상단을 계속 제약하는 구조. "니치 수요는 유지되나 메인스트림 채택은 제한적"이라는 시각이 균형적입니다.</div>
+  </section>
+
+  <!-- ===== CASHOUT ===== -->
+  <section>
+    <div class="section-head">
+      <h2>현금화 경로</h2>
+      <span class="section-note">한국 거래소 기준</span>
+    </div>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="flow-label">01 보유</div>
+        <div class="flow-main">XMR 채굴 적립</div>
+        <div class="flow-detail">풀 지갑 → 개인 지갑</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-label">02 해외 경유</div>
+        <div class="flow-main">XMR → BTC / USDT</div>
+        <div class="flow-detail">해외 거래소 또는 Haveno 스왑</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-label">03 국내 입금</div>
+        <div class="flow-main">BTC / USDT 전송</div>
+        <div class="flow-detail">업비트·빗썸 등 KYC 거래소</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-step">
+        <div class="flow-label">04 현금화</div>
+        <div class="flow-main">KRW 매도</div>
+        <div class="flow-detail">원화 출금</div>
+      </div>
+    </div>
+    <div class="ban-banner">
+      <span>⚠</span>
+      <span><b>국내 직거래 불가</b> — FIU 가이드라인상 업비트·빗썸 등 국내 원화거래소는 모네로를 익명성 강화 코인으로 분류해 상장하지 않습니다. 반드시 해외 경유 후 국내 거래소로 들어와야 합니다.</span>
+    </div>
+  </section>
+
+  <footer>
+    <div class="disclaimer">
+      본 대시보드는 2026년 10월 5일 기준 공개 자료를 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
+    </div>
+    <div class="sources">
+      SOURCES —
+      <a href="https://www.coinbase.com/price/monero" target="_blank" rel="noopener">Coinbase</a> ·
+      <a href="https://stealthex.io/blog/monero-price-prediction/" target="_blank" rel="noopener">StealthEX 가격 전망</a> ·
+      <a href="https://www.ccn.com/monero-xmr-price-prediction/" target="_blank" rel="noopener">CCN</a> ·
+      <a href="https://www.coinwarz.com/mining/monero/hashrate-chart" target="_blank" rel="noopener">CoinWarz 해시레이트</a> ·
+      <a href="https://minerstat.com/coin/xmr/network-hashrate" target="_blank" rel="noopener">Minerstat</a> ·
+      <a href="https://xmrig.com/benchmark/5nGrko" target="_blank" rel="noopener">XMRig 벤치마크</a> ·
+      <a href="https://docs.getmonero.org/technical-specs/" target="_blank" rel="noopener">Monero 기술 명세</a>
+    </div>
+  </footer>
+
+</div>
+</body>
+</html>
