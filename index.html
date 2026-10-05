@@ -29,6 +29,12 @@
     --cat-1:#E8590C;
     --cat-2:#0566A6;
     --cat-3:#A6852A;
+    --seq-1:#FBCBA3;
+    --seq-2:#F3A868;
+    --seq-3:#EA8A3C;
+    --seq-4:#D86E1E;
+    --seq-5:#B8540F;
+    --seq-6:#8C3D0A;
     --shadow: 0 1px 2px rgba(23,26,24,0.04), 0 4px 14px rgba(23,26,24,0.06);
   }
   *{box-sizing:border-box;}
@@ -102,6 +108,15 @@
   .chart-svg{width:100%;height:auto;display:block;}
   .chart-legend{display:flex;gap:18px;margin-top:10px;font-size:11.5px;color:var(--ink-muted);font-family:'IBM Plex Mono',monospace;flex-wrap:wrap;}
   .chart-legend span.sw{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--accent);margin-right:5px;vertical-align:-1px;}
+
+  /* ---------- Simulation chart ---------- */
+  .sim-legend{display:flex;gap:16px;margin-top:12px;flex-wrap:wrap;}
+  .sim-legend .leg-item{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-muted);}
+  .sim-legend .leg-sw{width:14px;height:3px;border-radius:2px;display:inline-block;}
+  .sim-end-row{display:grid;grid-template-columns:repeat(6,1fr);gap:10px;margin-top:18px;}
+  .sim-end-tile{border:1px solid var(--border);border-radius:8px;padding:12px 10px;text-align:center;background:var(--surface-sunken);}
+  .sim-end-tile .sim-rate{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--ink-muted);margin-bottom:6px;}
+  .sim-end-tile .sim-val{font-family:'IBM Plex Mono',monospace;font-size:14.5px;font-weight:700;}
 
   /* ---------- Profitability table ---------- */
   table{width:100%;border-collapse:collapse;font-size:13px;}
@@ -190,6 +205,7 @@
     .outlook-grid{grid-template-columns:1fr;}
     .plan-step{grid-template-columns:32px 1fr;grid-template-rows:auto auto;}
     .plan-step .status-chip{grid-column:2;justify-self:start;margin-top:6px;}
+    .sim-end-row{grid-template-columns:repeat(3,1fr);}
   }
 </style>
 </head>
@@ -227,9 +243,9 @@
         <div class="delta flat">RandomX · 전체 네트워크</div>
       </div>
       <div class="stat-tile">
-        <div class="label">예상 일일 순수익 (M2)</div>
-        <div class="value tnum" style="color:var(--good)">+₩6</div>
-        <div class="delta flat">풀 수수료·전기세 반영</div>
+        <div class="label">예상 일일 순수익 (내 Mac mini M4)</div>
+        <div class="value tnum" style="color:var(--good)">+₩82</div>
+        <div class="delta flat">4,000 H/s · 풀 수수료·전기세 반영</div>
       </div>
     </div>
   </section>
@@ -238,61 +254,99 @@
   <div class="two-col">
 
     <section class="card" style="margin-bottom:0;">
-      <h3>시세 흐름 · 주요 변곡점</h3>
-      <div class="card-sub">2024–2026년 연간 종가 및 사상 최고치 기준, USD</div>
+      <h3>시세 흐름 · 월별 스냅샷</h3>
+      <div class="card-sub">2024-01 ~ 2026-10, USD · 실선 = 월별 실측치, 점선 = 2개월 이상 공백(보간) 구간</div>
 
-      <svg class="chart-svg" viewBox="0 0 640 280" role="img" aria-label="모네로 가격 변동: 2024년 종가 193.60달러에서 2026년 1월 794.68달러로 급등 후 10월 553.71달러">
-        <!-- gridlines -->
+      <svg class="chart-svg" viewBox="0 0 640 280" role="img" aria-label="모네로 월별 가격: 2024년 1월 169.52달러에서 2026년 1월 794.68달러로 급등 후 10월 553.71달러로 하락">
+        <!-- y gridlines -->
         <g stroke="#D9DFD8" stroke-width="1">
           <line x1="56" y1="30"  x2="616" y2="30"/>
-          <line x1="56" y1="88"  x2="616" y2="88"/>
-          <line x1="56" y1="146" x2="616" y2="146"/>
-          <line x1="56" y1="204" x2="616" y2="204"/>
+          <line x1="56" y1="81"  x2="616" y2="81"/>
+          <line x1="56" y1="132" x2="616" y2="132"/>
+          <line x1="56" y1="183" x2="616" y2="183"/>
           <line x1="56" y1="238" x2="616" y2="238"/>
         </g>
         <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A928C">
           <text x="50" y="34" text-anchor="end">$800</text>
-          <text x="50" y="92" text-anchor="end">$600</text>
-          <text x="50" y="150" text-anchor="end">$400</text>
-          <text x="50" y="208" text-anchor="end">$200</text>
+          <text x="50" y="85" text-anchor="end">$600</text>
+          <text x="50" y="136" text-anchor="end">$400</text>
+          <text x="50" y="187" text-anchor="end">$200</text>
           <text x="50" y="242" text-anchor="end">$0</text>
         </g>
-        <!-- axis line -->
+        <!-- x quarter ticks -->
+        <g stroke="#C2CAC0" stroke-width="1">
+          <line x1="56"  y1="238" x2="56"  y2="243"/>
+          <line x1="106.9" y1="238" x2="106.9" y2="243"/>
+          <line x1="157.8" y1="238" x2="157.8" y2="243"/>
+          <line x1="208.7" y1="238" x2="208.7" y2="243"/>
+          <line x1="259.6" y1="238" x2="259.6" y2="243"/>
+          <line x1="310.5" y1="238" x2="310.5" y2="243"/>
+          <line x1="361.5" y1="238" x2="361.5" y2="243"/>
+          <line x1="412.4" y1="238" x2="412.4" y2="243"/>
+          <line x1="463.3" y1="238" x2="463.3" y2="243"/>
+          <line x1="514.2" y1="238" x2="514.2" y2="243"/>
+          <line x1="565.1" y1="238" x2="565.1" y2="243"/>
+          <line x1="616"  y1="238" x2="616"  y2="243"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#8A928C">
+          <text x="56"    y="253" text-anchor="middle">24Q1</text>
+          <text x="106.9" y="253" text-anchor="middle">24Q2</text>
+          <text x="157.8" y="253" text-anchor="middle">24Q3</text>
+          <text x="208.7" y="253" text-anchor="middle">24Q4</text>
+          <text x="259.6" y="253" text-anchor="middle">25Q1</text>
+          <text x="310.5" y="253" text-anchor="middle">25Q2</text>
+          <text x="361.5" y="253" text-anchor="middle">25Q3</text>
+          <text x="412.4" y="253" text-anchor="middle">25Q4</text>
+          <text x="463.3" y="253" text-anchor="middle">26Q1</text>
+          <text x="514.2" y="253" text-anchor="middle">26Q2</text>
+          <text x="565.1" y="253" text-anchor="middle">26Q3</text>
+          <text x="616"   y="253" text-anchor="middle">26Q4</text>
+        </g>
         <line x1="56" y1="238" x2="616" y2="238" stroke="#C2CAC0" stroke-width="1.2"/>
 
-        <!-- data path: pts at x=96,226,356,436,556 ; y scaled 0-800 -> 238..30 (range208px/800) -->
-        <!-- 2024 close 193.60 -> y=238-193.6*0.26=187.7 -->
-        <!-- 2025 close 434.08 -> y=238-434.08*0.26=125.1 -->
-        <!-- 2026 Jan peak 794.68 -> y=238-794.68*0.26=32.4 -->
-        <!-- 2026 Feb ~340 -> y=238-340*0.26=149.6 -->
-        <!-- 2026 Oct 553.71 -> y=238-553.71*0.26=93.0 -->
-        <polyline points="96,187.7 226,125.1 356,32.4 436,149.6 556,93.0"
-                  fill="none" stroke="#E8590C" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <!-- segments: solid where samples <=2mo apart, dashed where sparse -->
+        <g fill="none" stroke="#E8590C" stroke-width="2.25" stroke-linecap="round">
+          <line x1="56.0"  y1="196.5" x2="140.8" y2="197.5" stroke-dasharray="5 4"/>
+          <line x1="140.8" y1="197.5" x2="157.8" y2="199.4"/>
+          <line x1="157.8" y1="199.4" x2="174.8" y2="196.8"/>
+          <line x1="174.8" y1="196.8" x2="208.7" y2="198.4"/>
+          <line x1="208.7" y1="198.4" x2="225.7" y2="199.1"/>
+          <line x1="225.7" y1="199.1" x2="242.7" y2="190.6"/>
+          <line x1="242.7" y1="190.6" x2="259.6" y2="190.1"/>
+          <line x1="259.6" y1="190.1" x2="310.5" y2="154.8" stroke-dasharray="5 4"/>
+          <line x1="310.5" y1="154.8" x2="446.3" y2="131.8" stroke-dasharray="5 4"/>
+          <line x1="446.3" y1="131.8" x2="463.3" y2="43.5"/>
+          <line x1="463.3" y1="43.5"  x2="480.2" y2="154.8"/>
+          <line x1="480.2" y1="154.8" x2="616.0" y2="102.5" stroke-dasharray="5 4"/>
+        </g>
 
+        <!-- minor points (hover for exact value) -->
+        <g fill="#F0A56C">
+          <circle cx="56.0"  cy="196.5" r="3"><title>2024-01 · $169.52</title></circle>
+          <circle cx="140.8" cy="197.5" r="3"><title>2024-06 · $165.41</title></circle>
+          <circle cx="157.8" cy="199.4" r="3"><title>2024-07 · $157.72</title></circle>
+          <circle cx="174.8" cy="196.8" r="3"><title>2024-08 · $168.23</title></circle>
+          <circle cx="208.7" cy="198.4" r="3"><title>2024-10 · $161.84</title></circle>
+          <circle cx="225.7" cy="199.1" r="3"><title>2024-11 · $159.10</title></circle>
+          <circle cx="310.5" cy="154.8" r="3"><title>2025-04 급등 · $340</title></circle>
+          <circle cx="480.2" cy="154.8" r="3"><title>2026-02 · $340</title></circle>
+        </g>
+
+        <!-- headline points (direct-labeled) -->
         <g fill="#E8590C">
-          <circle cx="96"  cy="187.7" r="4.5"/>
-          <circle cx="226" cy="125.1" r="4.5"/>
-          <circle cx="356" cy="32.4"  r="5.5"/>
-          <circle cx="436" cy="149.6" r="4.5"/>
-          <circle cx="556" cy="93.0"  r="5.5" stroke="#171A18" stroke-width="1.4"/>
+          <circle cx="242.7" cy="190.6" r="5"><title>2024-12 종가 · $193.60</title></circle>
+          <circle cx="446.3" cy="131.8" r="5"><title>2025-12 종가 · $434.08</title></circle>
+          <circle cx="463.3" cy="43.5"  r="5.5" stroke="#171A18" stroke-width="1.4"><title>2026-01 사상 최고 · $794.68</title></circle>
+          <circle cx="616.0" cy="102.5" r="5.5" stroke="#171A18" stroke-width="1.4"><title>2026-10 현재 · $553.71</title></circle>
         </g>
-
-        <g font-family="IBM Plex Mono, monospace" font-size="11" fill="#171A18" font-weight="600">
-          <text x="96"  y="203" text-anchor="middle">$193.60</text>
-          <text x="226" y="141" text-anchor="middle">$434.08</text>
-          <text x="356" y="22"  text-anchor="middle">$794.68</text>
-          <text x="436" y="165" text-anchor="middle">$340</text>
-          <text x="556" y="78"  text-anchor="middle">$553.71</text>
-        </g>
-        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#5B6460">
-          <text x="96"  y="256" text-anchor="middle">2024 종가</text>
-          <text x="226" y="256" text-anchor="middle">2025 종가</text>
-          <text x="356" y="256" text-anchor="middle">2026-01 최고</text>
-          <text x="436" y="256" text-anchor="middle">2026-02</text>
-          <text x="556" y="256" text-anchor="middle">2026-10 현재</text>
+        <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#171A18" font-weight="600">
+          <text x="242.7" y="207" text-anchor="middle">$193.60</text>
+          <text x="446.3" y="148" text-anchor="middle">$434.08</text>
+          <text x="463.3" y="33"  text-anchor="start" dx="6">$794.68</text>
+          <text x="616.0" y="88"  text-anchor="end">$553.71</text>
         </g>
       </svg>
-      <div class="chart-legend"><span><span class="sw"></span>XMR/USD 종가·주요 변곡점</span></div>
+      <div class="chart-legend"><span><span class="sw"></span>XMR/USD 월별 스냅샷(점=실측)</span></div>
     </section>
 
     <section class="card" style="margin-bottom:0;">
@@ -310,8 +364,8 @@
             <td class="num tnum">+₩6</td>
             <td><span class="pill warn">손익 ±0</span></td>
           </tr>
-          <tr>
-            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>Mac mini M4</td>
+          <tr style="background:var(--accent-soft)">
+            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>Mac mini M4 <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">내 기기 · Mac16,10</span></td>
             <td class="num tnum">4,000 H/s</td>
             <td class="num tnum">+₩82</td>
             <td><span class="pill warn">미미한 흑자</span></td>
@@ -325,11 +379,106 @@
         </tbody>
       </table>
       <div class="table-foot-note">
-        전기요금 25W·0.6kWh/일·200원/kWh 가정, 풀 수수료 1% 반영한 추정치입니다. 실제 수치는 전기요금 구간, 채굴 풀, 시세에 따라 크게 달라집니다. 풀의 최소 출금 기준은 통상 0.01~0.1 XMR인데, 이 속도로는 M2가 기준치 도달까지 최대 1.6년, M4 Max는 최소 3주가 걸립니다.
+        전기요금 25W·0.6kWh/일·200원/kWh 가정, 풀 수수료 1% 반영한 추정치입니다. 실제 수치는 전기요금 구간, 채굴 풀, 시세에 따라 크게 달라집니다. 풀의 최소 출금 기준은 통상 0.01~0.1 XMR인데, 이 속도로는 M2가 기준치 도달까지 최대 1.6년, 내 기기(M4)는 약 5~53주(1개월~1년), M4 Max는 최소 3주가 걸립니다.
       </div>
     </section>
 
   </div>
+
+  <!-- ===== LONG-TERM SIMULATION ===== -->
+  <section class="card">
+    <h3>장기 보유 시뮬레이션 · 누적 채굴 자산의 평가금액</h3>
+    <div class="card-sub">내 Mac mini(M4, 4,000 H/s)로 매일 채굴, 코인을 전혀 매도하지 않고 보유 — 월간 가격 성장률 시나리오별 12개월 후 평가금액</div>
+
+    <svg class="chart-svg" viewBox="0 0 700 280" role="img" aria-label="월 성장률 1%에서 15%까지 6개 시나리오에서 12개월 후 누적 채굴 자산 평가금액, 최저 8만1936원에서 최고 38만9039원">
+      <g stroke="#D9DFD8" stroke-width="1">
+        <line x1="56" y1="238" x2="616" y2="238"/>
+        <line x1="56" y1="186" x2="616" y2="186"/>
+        <line x1="56" y1="134" x2="616" y2="134"/>
+        <line x1="56" y1="82"  x2="616" y2="82"/>
+        <line x1="56" y1="30"  x2="616" y2="30"/>
+      </g>
+      <g font-family="IBM Plex Mono, monospace" font-size="10.5" fill="#8A928C">
+        <text x="50" y="242" text-anchor="end">₩0</text>
+        <text x="50" y="190" text-anchor="end">10만</text>
+        <text x="50" y="138" text-anchor="end">20만</text>
+        <text x="50" y="86"  text-anchor="end">30만</text>
+        <text x="50" y="34"  text-anchor="end">40만</text>
+      </g>
+      <g stroke="#C2CAC0" stroke-width="1">
+        <line x1="56"  y1="238" x2="56"  y2="243"/>
+        <line x1="102.7" y1="238" x2="102.7" y2="243"/>
+        <line x1="149.3" y1="238" x2="149.3" y2="243"/>
+        <line x1="196.0" y1="238" x2="196.0" y2="243"/>
+        <line x1="242.7" y1="238" x2="242.7" y2="243"/>
+        <line x1="289.3" y1="238" x2="289.3" y2="243"/>
+        <line x1="336.0" y1="238" x2="336.0" y2="243"/>
+        <line x1="382.7" y1="238" x2="382.7" y2="243"/>
+        <line x1="429.3" y1="238" x2="429.3" y2="243"/>
+        <line x1="476.0" y1="238" x2="476.0" y2="243"/>
+        <line x1="522.7" y1="238" x2="522.7" y2="243"/>
+        <line x1="569.3" y1="238" x2="569.3" y2="243"/>
+        <line x1="616.0" y1="238" x2="616.0" y2="243"/>
+      </g>
+      <g font-family="IBM Plex Mono, monospace" font-size="9.5" fill="#8A928C">
+        <text x="56"    y="253" text-anchor="middle">0개월</text>
+        <text x="149.3" y="253" text-anchor="middle">2</text>
+        <text x="242.7" y="253" text-anchor="middle">4</text>
+        <text x="336.0" y="253" text-anchor="middle">6</text>
+        <text x="429.3" y="253" text-anchor="middle">8</text>
+        <text x="522.7" y="253" text-anchor="middle">10</text>
+        <text x="616.0" y="253" text-anchor="middle">12개월</text>
+      </g>
+      <line x1="56" y1="238" x2="616" y2="238" stroke="#C2CAC0" stroke-width="1.2"/>
+
+      <g fill="none" stroke-width="2.25" stroke-linecap="round" stroke-linejoin="round">
+        <polyline stroke="var(--seq-1)" points="56.0,238.0 102.7,234.8 149.3,231.6 196.0,228.3 242.7,224.9 289.3,221.4 336.0,217.9 382.7,214.4 429.3,210.7 476.0,207.0 522.7,203.2 569.3,199.3 616.0,195.4"><title>월 +1% 성장 · 12개월 후 ₩81,936</title></polyline>
+        <polyline stroke="var(--seq-2)" points="56.0,238.0 102.7,234.8 149.3,231.3 196.0,227.7 242.7,223.8 289.3,219.7 336.0,215.4 382.7,210.9 429.3,206.1 476.0,201.0 522.7,195.7 569.3,190.0 616.0,184.1"><title>월 +3% 성장 · 12개월 후 ₩103,673</title></polyline>
+        <polyline stroke="var(--seq-3)" points="56.0,238.0 102.7,234.7 149.3,231.1 196.0,227.1 242.7,222.7 289.3,217.9 336.0,212.7 382.7,207.0 429.3,200.8 476.0,194.0 522.7,186.7 569.3,178.7 616.0,170.1"><title>월 +5% 성장 · 12개월 후 ₩130,584</title></polyline>
+        <polyline stroke="var(--seq-4)" points="56.0,238.0 102.7,234.6 149.3,230.8 196.0,226.4 242.7,221.5 289.3,215.9 336.0,209.6 382.7,202.6 429.3,194.7 476.0,185.9 522.7,176.0 569.3,165.0 616.0,152.8"><title>월 +7% 성장 · 12개월 후 ₩163,766</title></polyline>
+        <polyline stroke="var(--seq-5)" points="56.0,238.0 102.7,234.5 149.3,230.4 196.0,225.4 242.7,219.5 289.3,212.6 336.0,204.5 382.7,195.0 429.3,184.0 476.0,171.1 522.7,156.3 569.3,139.1 616.0,119.3"><title>월 +10% 성장 · 12개월 후 ₩228,208</title></polyline>
+        <polyline stroke="var(--seq-6)" points="56.0,238.0 102.7,234.4 149.3,229.7 196.0,223.6 242.7,216.0 289.3,206.3 336.0,194.3 382.7,179.3 429.3,160.9 476.0,138.2 522.7,110.5 569.3,76.7 616.0,35.7"><title>월 +15% 성장 · 12개월 후 ₩389,039</title></polyline>
+      </g>
+      <g stroke="none">
+        <circle cx="616.0" cy="195.4" r="3" fill="var(--seq-1)"/>
+        <circle cx="616.0" cy="184.1" r="3" fill="var(--seq-2)"/>
+        <circle cx="616.0" cy="170.1" r="3" fill="var(--seq-3)"/>
+        <circle cx="616.0" cy="152.8" r="3" fill="var(--seq-4)"/>
+        <circle cx="616.0" cy="119.3" r="3" fill="var(--seq-5)"/>
+        <circle cx="616.0" cy="35.7"  r="3" fill="var(--seq-6)"/>
+      </g>
+      <g font-family="IBM Plex Mono, monospace" font-size="10.5" font-weight="700" fill="#171A18">
+        <text x="624" y="199">₩8.2만</text>
+        <text x="624" y="184.1">₩10.4만</text>
+        <text x="624" y="170.1">₩13.1만</text>
+        <text x="624" y="152.8">₩16.4만</text>
+        <text x="624" y="119.3">₩22.8만</text>
+        <text x="624" y="35.7">₩38.9만</text>
+      </g>
+    </svg>
+
+    <div class="sim-legend">
+      <span class="leg-item"><span class="leg-sw" style="background:var(--seq-1)"></span>월 +1%</span>
+      <span class="leg-item"><span class="leg-sw" style="background:var(--seq-2)"></span>월 +3%</span>
+      <span class="leg-item"><span class="leg-sw" style="background:var(--seq-3)"></span>월 +5%</span>
+      <span class="leg-item"><span class="leg-sw" style="background:var(--seq-4)"></span>월 +7%</span>
+      <span class="leg-item"><span class="leg-sw" style="background:var(--seq-5)"></span>월 +10%</span>
+      <span class="leg-item"><span class="leg-sw" style="background:var(--seq-6)"></span>월 +15%</span>
+    </div>
+
+    <div class="sim-end-row">
+      <div class="sim-end-tile"><div class="sim-rate">월 +1%</div><div class="sim-val tnum">₩81,936</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +3%</div><div class="sim-val tnum">₩103,673</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +5%</div><div class="sim-val tnum">₩130,584</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +7%</div><div class="sim-val tnum">₩163,766</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +10%</div><div class="sim-val tnum">₩228,208</div></div>
+      <div class="sim-end-tile"><div class="sim-rate">월 +15%</div><div class="sim-val tnum">₩389,039</div></div>
+    </div>
+
+    <div class="table-foot-note">
+      가정: 일일 채굴량 0.0002715 XMR(M4, 풀 수수료 1% 반영, 난이도·네트워크 해시레이트는 현재 수준 6.3 GH/s로 고정) × 매월 복리 성장률 × 12개월. 코인은 매도하지 않고 전액 보유, 평가금액은 매월 말 시세로 마크투마켓한 값입니다. 월 +7% 이상은 2025~2026년 급등기에 근접한 낙관적 시나리오이며, 실제로는 하락 구간도 섞여 있어 이 경로대로 꾸준히 오를 가능성은 낮습니다. 투자 조언이 아닙니다.
+    </div>
+  </section>
 
   <!-- ===== MINING PLAN ===== -->
   <section>
@@ -465,7 +614,9 @@
       <a href="https://www.coinwarz.com/mining/monero/hashrate-chart" target="_blank" rel="noopener">CoinWarz 해시레이트</a> ·
       <a href="https://minerstat.com/coin/xmr/network-hashrate" target="_blank" rel="noopener">Minerstat</a> ·
       <a href="https://xmrig.com/benchmark/5nGrko" target="_blank" rel="noopener">XMRig 벤치마크</a> ·
-      <a href="https://docs.getmonero.org/technical-specs/" target="_blank" rel="noopener">Monero 기술 명세</a>
+      <a href="https://docs.getmonero.org/technical-specs/" target="_blank" rel="noopener">Monero 기술 명세</a> ·
+      <a href="https://www.exchangerates.org.uk/crypto-currencies/monero-to-us-dollar-history-xmr-usd-2024" target="_blank" rel="noopener">2024년 월별 시세</a> ·
+      <a href="https://coinmarketcap.com/currencies/monero/historical-data/" target="_blank" rel="noopener">CoinMarketCap 히스토리</a>
     </div>
   </footer>
 
