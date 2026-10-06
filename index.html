@@ -504,6 +504,84 @@
     </div>
   </section>
 
+  <!-- ===== ALTERNATIVE COIN ANALYSIS ===== -->
+  <section>
+    <div class="section-head">
+      <h2>다른 코인 채굴 가능성 검토</h2>
+      <span class="section-note">2026-10-06 분석 · 교체 아님, 참고용</span>
+    </div>
+
+    <div class="card" style="margin-bottom:16px;">
+      <h3>수익성 비교 — "난이도가 낮으면 더 번다"는 틀렸다</h3>
+      <div class="card-sub">같은 RandomX 계열인 Wownero와 비교. 코인을 100배 더 캐도 가격이 그만큼 낮아 상쇄됨</div>
+      <table>
+        <thead>
+          <tr><th>코인</th><th class="num">네트워크 해시레이트</th><th class="num">내 10코어 몫</th><th class="num">일 예상 수익</th></tr>
+        </thead>
+        <tbody>
+          <tr style="background:var(--accent-soft)">
+            <td class="device"><span class="swatch" style="background:var(--cat-2)"></span>모네로(XMR, 풀) <span class="chip accent" style="margin-left:4px;padding:2px 6px;font-size:9.5px;">실측·현재 운영</span></td>
+            <td class="num tnum">6.3 GH/s</td>
+            <td class="num tnum">0.00007%</td>
+            <td class="num tnum">₩209</td>
+          </tr>
+          <tr>
+            <td class="device"><span class="swatch" style="background:var(--cat-1)"></span>Wownero(WOW, 솔로)</td>
+            <td class="num tnum">63 MH/s</td>
+            <td class="num tnum">0.0063%</td>
+            <td class="num tnum">~₩97 (추정)</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="table-foot-note">
+        Wownero는 네트워크가 모네로의 1/100이라 내 몫은 90배 커지지만, 코인 가격도 그만큼(약 $0.035) 낮아서 원화 기준 수익은 비슷하거나 오히려 낮습니다. 다만 네트워크가 작아 <b>솔로 채굴로 평균 약 55일마다 블록 하나를 통째로 발견할 확률</b>이 생기는데, 이건 모네로(사실상 평생 불가능)와 다른 "재미" 요소입니다. 가격은 추정치이며 실측 아님.
+      </div>
+    </div>
+
+    <div class="card">
+      <h3>국내 거래소 상장 × CPU/GPU 채굴 가능 — 교집합 없음</h3>
+      <div class="card-sub">업비트·빗썸 기준, 2026-10-06 확인</div>
+      <table>
+        <thead>
+          <tr><th>코인</th><th>CPU/GPU 채굴</th><th>국내 상장</th><th>비고</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="device">모네로, Wownero, Dero, Verus</td>
+            <td><span class="pill good">가능</span></td>
+            <td><span class="pill crit">미상장</span></td>
+            <td>프라이버시 코인 규제(FIU) 또는 시총 부족</td>
+          </tr>
+          <tr>
+            <td class="device">Raptoreum</td>
+            <td><span class="pill good">가능</span></td>
+            <td><span class="pill crit">미상장</span></td>
+            <td>해외 소규모 거래소 2곳뿐</td>
+          </tr>
+          <tr>
+            <td class="device">비트코인·기타 국내 상장 PoW</td>
+            <td><span class="pill crit">의미없음</span></td>
+            <td><span class="pill good">상장됨</span></td>
+            <td>전부 ASIC 독점 — CPU·애플GPU 몫은 0에 가까움</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="verdict">
+        <b>결론</b> — "국내 거래소에서 바로 파는 코인"과 "맥미니로 재미있게 채굴하는 코인"은 지금 구조상 양립하지 않습니다. 재미·체험이 목적이면 해외 경유가 필요한 모네로 계열로 계속 가는 게 맞고, 국내 현금화가 중요하면 채굴 자체를 포기하고 거래소에서 직접 사는 게 합리적입니다.
+      </div>
+    </div>
+
+    <div class="check-list" style="margin-top:16px;">
+      <div class="check-item critical">
+        <span class="check-tag">위험</span>
+        <div class="check-body">
+          <div class="check-title">"애플 실리콘으로 비트코인 채굴" 류 소프트웨어 설치 금지</div>
+          <div class="check-desc">검색 중 "Metal GPU로 900+ MH/s 비트코인 채굴" 등을 주장하는 깃허브 프로젝트를 발견했는데, 비트코인 네트워크 전체는 EH/s(10^18) 단위라 900 MH/s(10^9)는 10억분의 1도 안 되는 수준입니다. 비트코인은 10년 넘게 전용 ASIC이 독점해 GPU 채굴 자체가 기술적으로 무의미하며, 자체 "풀" 구조를 내세우는 출처 불분명한 프로그램에 PC를 맡기는 건 설치하지 않는 걸 권합니다.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== LONG-TERM SIMULATION ===== -->
   <section class="card">
     <h3>장기 보유 시뮬레이션 · 누적 채굴 자산의 평가금액</h3>
