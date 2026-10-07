@@ -240,7 +240,7 @@
       <div class="sub">맥미니 CPU 채굴 타당성 분석과 시세 추적을 한 장에 정리한 개인용 대시보드.</div>
     </div>
     <div class="meta-chip-row">
-      <span class="chip accent">DATA AS OF 2026-10-06</span>
+      <span class="chip accent">DATA AS OF 2026-10-07</span>
       <span class="chip">취미 · 비영리 목적</span>
     </div>
   </header>
@@ -440,31 +440,31 @@
   <!-- ===== LIVE STATUS SNAPSHOT ===== -->
   <section class="card">
     <h3>실시간 채굴 현황 스냅샷</h3>
-    <div class="card-sub">SupportXMR 풀 공개 API + 로컬 상태 점검 기준 — <b>2026-10-06 01:38 KST</b> 캡처(실시간 갱신 아님, 수동 갱신). 지갑 주소는 보안상 이 페이지에 표시하지 않습니다.</div>
+    <div class="card-sub">SupportXMR 풀 공개 API + 로컬 상태 점검 기준 — <b>2026-10-07 16:26 KST</b> 캡처(실시간 갱신 아님, 수동 갱신). 지갑 주소는 보안상 이 페이지에 표시하지 않습니다.</div>
     <div class="stat-row" style="margin-top:4px;">
       <div class="stat-tile">
         <div class="label">해시레이트</div>
-        <div class="value tnum">4,120 <small>H/s</small></div>
-        <div class="delta flat">풀 서버 기준 보고값</div>
+        <div class="value tnum">3,375 <small>H/s</small></div>
+        <div class="delta flat">풀 서버 기준 보고값 · 측정마다 변동</div>
       </div>
       <div class="stat-tile">
         <div class="label">미지급 적립금</div>
-        <div class="value tnum">0.00000023 <small>XMR</small></div>
-        <div class="delta flat">≈ ₩0.17 · PPLNS라 계단식 증가</div>
+        <div class="value tnum">0.00038 <small>XMR</small></div>
+        <div class="delta flat">≈ ₩283.7 · PPLNS라 계단식 증가</div>
       </div>
       <div class="stat-tile">
         <div class="label">지급 완료 / 지갑 잔액</div>
         <div class="value tnum">0 <small>XMR</small></div>
-        <div class="delta flat">아직 출금 기준 미달 — 정상</div>
+        <div class="delta flat">아직 출금 기준(0.1 XMR) 미달 — 정상</div>
       </div>
       <div class="stat-tile">
         <div class="label">프로세스 · CPU 열압력</div>
         <div class="value tnum" style="color:var(--good);font-size:19px;">가동 중 · Nominal</div>
-        <div class="delta flat">5분 주기 자동 감시 가동 중</div>
+        <div class="delta flat">무중단 가동 1일 15시간+</div>
       </div>
     </div>
     <div class="table-foot-note">
-      이 스냅샷과 동일한 내용이 매일 09:03·15:05·21:06(KST)에 카카오톡·이메일로 자동 발송됩니다(알림은 이 저장소와 무관하게 비공개 채널로만 전송). 해시레이트 급락, 프로세스 중단, 열압력 상승(Nominal 이탈) 시에도 별도 알림이 갑니다.
+      이 스냅샷과 동일한 내용이 매일 09:03·15:05·21:06(KST)에 카카오톡·이메일로 자동 발송되도록 예약돼 있습니다. <b>단, 2026-10-07에 실제로 확인해보니 세션이 한 번 끊겼다 재시작되는 동안 이 예약이 조용히 멈췄던 적이 있습니다</b>(채굴 자체는 영향 없이 계속 가동됨 — 프로세스가 launchd가 아닌 완전히 독립된 상태라 세션과 무관하게 살아있었습니다). 알림 예약은 재등록했지만, 세션이 끊기면 다시 멈출 수 있는 구조적 한계가 있어 알림이 안 오면 수동으로 재등록이 필요합니다.
     </div>
   </section>
 
@@ -862,7 +862,7 @@
 
   <footer>
     <div class="disclaimer">
-      본 대시보드는 2026년 10월 6일 기준 공개 자료와 내 Mac mini(M4)에서 실제 SupportXMR 풀에 연결해 측정한 실측값을 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금·채굴 풀 조건은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
+      본 대시보드는 2026년 10월 7일 기준 공개 자료와 내 Mac mini(M4)에서 실제 SupportXMR 풀에 연결해 측정한 실측값을 바탕으로 작성한 취미용 분석이며 투자 조언이 아닙니다. 암호화폐 가격·해시레이트·전기요금·채굴 풀 조건은 수시로 변동하므로 실제 수치와 차이가 있을 수 있습니다. 채굴·거래소 이용 시 관련 법규 및 세무 신고 의무를 직접 확인하세요.
     </div>
     <div class="sources">
       SOURCES —
